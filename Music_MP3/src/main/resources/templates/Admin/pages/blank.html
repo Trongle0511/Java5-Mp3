@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -8,7 +8,9 @@
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../css/css.css">
     <link rel="stylesheet" href="../build/css/tailwind.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
   </head>
@@ -247,7 +249,7 @@
                     role="menuitem"
                     class="block p-2 text-sm text-gray-700 transition-colors duration-200 rounded-md dark:text-light dark:hover:text-light hover:text-gray-700"
                   >
-                    Blank
+                    Insert Song
                   </a>
                   <a
                     href="../pages/404.html"
@@ -1311,7 +1313,57 @@
           <!-- Main content -->
           <div class="flex items-center justify-center flex-1 h-full p-4">
             <main>
-              <h1 class="text-3xl font-semibold">Page content</h1>
+              <div class="header_fixed">
+                <table id="tableInsertSong">
+                  <thead>
+                    <th>stt</th>
+                    <th>Image</th>
+                    <th>Song Name</th>
+                    <th>stt</th>
+                    <th>stt</th>
+                    <th>stt</th>
+                    <th>action</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td><img src="../../Home/library/image/AnhSaoVaBauTroi.jpg"> </td>
+                      <td>Ánh sao và bầu trời</td>
+                      <td>trongle311021@gmail.com</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>
+                        <button><i class="fas fa-trash-alt"></i></button>
+                        <button><i class="fas fa-edit"></i></button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td><img src="../../Home/library/image/AnhSaoVaBauTroi.jpg"> </td>
+                      <td>Ánh sao và bầu trời</td>
+                      <td>trongle311021@gmail.com</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>
+                        <button><i class="fas fa-trash-alt"></i></button>
+                        <button><i class="fas fa-edit"></i></button>
+                      </td>
+                    </tr><tr>
+                      <td>1</td>
+                      <td><img src="../../Home/library/image/AnhSaoVaBauTroi.jpg"> </td>
+                      <td>Ánh sao và bầu trời</td>
+                      <td>trongle311021@gmail.com</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>
+                        <button><i class="fas fa-trash-alt"></i></button>
+                        <button><i class="fas fa-edit"></i></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
             </main>
           </div>
         </div>
