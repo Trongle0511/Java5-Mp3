@@ -2103,3 +2103,41 @@ video {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
+.header_fixed{
+  height: 650px;
+  overflow: auto;
+}
+
+thead th{
+  position: sticky;
+  top:0;
+  /*background-color: white;*/
+  font-size: 15px;
+}
+th,td{
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  word-break: break-all;
+  text-align: center;
+}
+td img{
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  border: 5px solid white;
+  object-fit: cover;
+  justify-items: center;
+
+}
+#tableInsertSong{
+  width: 100%;
+  table-layout: fixed;
+  min-width: 1000px;
+  text-align: center;
+}
+tr:hover td{
+  color: #170225;
+  cursor: pointer;
+  background-color: #0891b2;
+
+}

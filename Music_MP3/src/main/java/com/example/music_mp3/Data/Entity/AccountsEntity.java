@@ -29,9 +29,6 @@ public class AccountsEntity{
     @Column(name = "role")
     private Boolean role;
 
-    @Column(name = "reset_token")
-    private String resetToken;
-
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private UserEntity user;
 
