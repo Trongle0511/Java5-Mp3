@@ -1,9 +1,11 @@
 package com.example.music_mp3.Api;
 
 import com.example.music_mp3.Data.DTO.SongDTO;
+import com.example.music_mp3.Data.DTO.SongInsertDto;
 import com.example.music_mp3.Data.Entity.SongsEntity;
 import com.example.music_mp3.Data.Model.SongM;
 import com.example.music_mp3.Service.ServiceImpl.SongServiceImpl;
+import com.example.music_mp3.Service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,9 @@ import java.util.Map;
 public class SongApi {
     @Autowired
     private SongServiceImpl songServiceImpl;
+
+    @Autowired
+    private SongService songService;
 
     @GetMapping("/findSongId")
     public ResponseEntity<?> findSongId(@RequestParam("songId") int songId) {
@@ -32,6 +37,7 @@ public class SongApi {
         return ResponseEntity.ok(songM);
 
     }
+
     @GetMapping("/findAllSongs")
     public ResponseEntity<Map<String, Object>> findAllSongs() {
         Map<String, Object> response = new HashMap<>();
@@ -46,5 +52,11 @@ public class SongApi {
             response.put("message", "No songs found");
             return ResponseEntity.status(204).body(response);
         }
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveSong(@RequestBody SongInsertDto songInsertDto) {
+        SongsEntity savedSong = songService.saveSong(songInsertDto);
+        return ResponseEntity.ok(savedSong);
     }
 }
