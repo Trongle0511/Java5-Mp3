@@ -13,76 +13,7 @@
     <!-- this script is just for font awesome fonts -->
     <script src="https://kit.fontawesome.com/2d9b67a497.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            axios.get('/api-public/song/findAllSongs')
-                .then(function (response) {
-                    if (response.status === 200 && response.data.status === 'success') {
-                        const songs = response.data.data;
-                        console.log(songs);
-                        const songContainer = document.getElementById('song-container');
 
-                        songs.forEach(song => {
-                            const songCard = `
-                                <div class="card">
-                                    <div>
-                                        <!-- image corresponding to the card -->
-                                        <img src="library/image/${song.image}">
-                                        <!-- play button, which will be shown on hover on the card image -->
-                                        <div class="play-button">
-                                            <i class="fas fa-play" style="width:100%; height:100%; display:inline-block"></i>
-                                        </div>
-                                    </div>
-                                    <!-- it will contain the name and date of release of the song -->
-                                    <div class="song-description">
-                                        <h3>
-                                            ${song.song_name}
-                                        </h3>
-                                        <p>
-                                            Aug 20, 2020
-                                        </p>
-                                    </div>
-                                    <!-- if someone clicks on the three dots, options will be shown to the user for further action -->
-                                    <div class="options">
-                                        <label for="latest-release-checkbox"><i class="fas fa-ellipsis-h"></i></label>
-                                        <input type="checkbox" id="latest-release-checkbox">
-                                        <div class="latest-release-dropdown">
-                                            <div class="drop-item">
-                                                <!-- if user clicks on play now button, he/she will be taken to the single playlist page -->
-                                                <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play
-                                                        Now</a></p>
-                                            </div>
-                                            <hr>
-                                            <div class="drop-item">
-                                                <p><i class="fas fa-list-ul"></i> Add to Queue</p>
-                                            </div>
-                                            <hr>
-                                            <div class="drop-item">
-                                                <p><i class="fas fa-music"></i> Add to playlist</p>
-                                            </div>
-                                            <hr>
-                                            <div class="drop-item">
-                                                <p><i class="fas fa-info-circle"></i> Get Info</p>
-                                            </div>
-                                        </div>
-                                        <!-- duration of the song -->
-                                        <p>
-                                            4:44
-                                        </p>
-                                    </div>
-                                </div>
-                            `;
-                            songContainer.innerHTML += songCard;
-                        });
-                    } else {
-                        alert(response.data.message || 'No songs found');
-                    }
-                })
-                .catch(function (error) {
-                    console.error('There was an error fetching the songs:', error);
-                });
-        });
-    </script>
 </head>
 <!-- body -->
 <style>
@@ -761,19 +692,12 @@
 <!-- its position will be fixed to the screen bottom. -->
 <footer>
     <div class="active-song-description">
-        <!-- song image -->
         <div id="song-image">
-            <img src="media/latest english/roar.jpg">
+            <img src="media/latest english/roar.jpg" alt="Current song image">
         </div>
-        <!-- song name and author -->
         <div class="song-desc">
-            <div>
-                Imagine by John
-            </div>
-            <div>
-                John Lennon
-            </div>
-            <!-- heart icon and ban icon -->
+            <div>Imagine by John</div>
+            <div>John Lennon</div>
         </div>
         <div class="heart-and-ban-icon">
             <span>
@@ -784,56 +708,229 @@
             </span>
         </div>
     </div>
-    <!-- these are the main player controls -->
     <div class="player">
         <div class="controls">
             <div><i class="fas fa-random"></i></div>
             <div><i class="fas fa-step-backward"></i></div>
-            <!-- Play/pause button -->
             <div id="play-pause-button"><i class="fas fa-play-circle"></i></div>
             <div><i class="fas fa-step-forward"></i></div>
             <div><i class="fas fa-redo"></i></div>
         </div>
-        <!-- this is the slider -->
         <div id="slider">
-            <!-- current time -->
             <div class="time">
                 <span id="current-time">0:00</span>
             </div>
             <div id="time-slider" class="slidecontainer">
                 <input type="range" min="0" max="100" value="0" class="slider" id="songTime">
             </div>
-            <!-- total time -->
             <div class="time">
                 <span id="total-time">0:00</span>
             </div>
         </div>
     </div>
-    <!-- other icons including the volume slider and all -->
     <div class="extras">
-        <div>
-            <i class="fas fa-list-ul"></i>
-        </div>
-        <div>
-            <i class="fas fa-laptop"></i>
-        </div>
-        <div>
-            <i class="fas fa-volume-up"></i>
-        </div>
+        <div><i class="fas fa-list-ul"></i></div>
+        <div><i class="fas fa-laptop"></i></div>
+        <div><i class="fas fa-volume-up"></i></div>
         <div class="slidecontainer" style="width:30%;">
-            <input type="range" min="0" max="100" value="0" class="slider" id="volumeRange" style="margin-top:0px;">
-        </div>
-        <div>
-            <i class="fas fa-expand-alt"></i>
+            <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0;">
         </div>
     </div>
-
-    <!-- Audio element -->
-    <audio id="audio-player" src="library/Music/town-10169.mp3"></audio>
 </footer>
+<audio id="audio-player" controls style="display:none;"></audio>
 
-git
+
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const songContainer = document.getElementById('song-container');
+        const audioPlayer = document.getElementById('audio-player');
+        const footerSongImage = document.getElementById('song-image').querySelector('img');
+        const footerSongName = document.querySelector('.song-desc div:nth-child(1)');
+        const footerSongAuthor = document.querySelector('.song-desc div:nth-child(2)');
+        const playPauseButton = document.getElementById('play-pause-button').querySelector('i');
+        const currentTimeElement = document.getElementById('current-time');
+        const totalTimeElement = document.getElementById('total-time');
+        const timeSlider = document.getElementById('songTime');
+        const volumeRange = document.getElementById('volumeRange');
+
+        let currentSong = null;
+
+        // Function to format time in mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secondsRemaining = Math.floor(seconds % 60);
+            return `${minutes}:${secondsRemaining < 10 ? '0' : ''}${secondsRemaining}`;
+        }
+
+        // Function to get all songs
+        function getAllSongs() {
+            return axios.get('/api-public/song/findAllSongs');
+        }
+
+        // Function to get song details by ID
+        function getSongDetails(songId) {
+            return axios.get(`/api-public/song/findSongId?songId=${songId}`);
+        }
+
+        // Function to render songs
+        function renderSongs(songs) {
+            songs.forEach(song => {
+                const songCard = `
+            <div class="card" id="playSong">
+                <div>
+                    <img src="library/image/${song.image}">
+                    <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
+                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}">
+                        <i class="fas fa-play" style="width:100%; height:100%; display:inline-block"></i>
+                    </div>
+                </div>
+                <div class="song-description">
+                    <h3>${song.song_name}</h3>
+                    <p>Aug 20, 2020</p>
+                </div>
+                <div class="options">
+                    <label for="latest-release-checkbox"><i class="fas fa-ellipsis-h"></i></label>
+                    <input type="checkbox" id="latest-release-checkbox">
+                    <div class="latest-release-dropdown">
+                        <div class="drop-item">
+                            <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play Now</a></p>
+                        </div>
+                        <hr>
+                        <div class="drop-item">
+                            <p><i class="fas fa-list-ul"></i> Add to Queue</p>
+                        </div>
+                        <hr>
+                        <div class="drop-item">
+                            <p><i class="fas fa-music"></i> Add to playlist</p>
+                        </div>
+                        <hr>
+                        <div class="drop-item">
+                            <p><i class="fas fa-info-circle"></i> Get Info</p>
+                        </div>
+                    </div>
+                    <p>4:44</p>
+                </div>
+            </div>
+        `;
+                songContainer.innerHTML += songCard;
+            });
+
+            // Add event listeners to play buttons
+            const playButtons = document.querySelectorAll('.play-button');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const songId = this.getAttribute('data-song-id');
+                    const songSrc = this.getAttribute('data-song-src');
+                    const songImage = this.getAttribute('data-song-image');
+                    const songName = this.getAttribute('data-song-name');
+                    const songAuthor = this.getAttribute('data-song-author');
+                    playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+
+                    // Call getSongDetails with the selected song ID
+                    getSongDetails(songId)
+                        .then(function (response) {
+                            if (response.status === 200) {
+                                const songDetails = response.data;
+                                console.log('Song Details:', songDetails);
+
+                                // Update footer with song details
+                                footerSongImage.src = songImage;
+                                footerSongName.textContent = songName;
+                                footerSongAuthor.textContent = songAuthor;
+
+                                // Update the audio source and play the song
+                                audioPlayer.src = songSrc;
+                                audioPlayer.play();
+
+
+                                // Set the volume to maximum
+                                audioPlayer.volume = 1;
+                                volumeRange.value = 100;
+
+                                // Update the play/pause button
+                                playPauseButton.classList.remove('fa-play-circle');
+                                playPauseButton.classList.add('fa-pause-circle');
+
+                                // Set the current song
+                                currentSong = {
+                                    songId,
+                                    songSrc,
+                                    songImage,
+                                    songName,
+                                    songAuthor
+                                };
+                            } else {
+                                alert('Failed to get song details');
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error('Error fetching song details:', error);
+                        });
+                });
+            });
+        }
+        // Initial call to get all songs
+        getAllSongs()
+            .then(function (response) {
+                if (response.status === 200 && response.data.status === 'success') {
+                    const songs = response.data.data;
+                    console.log('All Songs:', songs);
+                    renderSongs(songs);
+                } else {
+                    alert(response.data.message || 'No songs found');
+                }
+            })
+            .catch(function (error) {
+                console.error('Error fetching songs:', error);
+            });
+
+        // Play/pause button functionality
+        playPauseButton.addEventListener('click', function () {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.classList.remove('fa-play-circle');
+                playPauseButton.classList.add('fa-pause-circle');
+            } else {
+                audioPlayer.pause();
+                playPauseButton.classList.remove('fa-pause-circle');
+                playPauseButton.classList.add('fa-play-circle');
+            }
+        });
+
+        // Update the play/pause button when the song ends
+        audioPlayer.addEventListener('ended', function () {
+            playPauseButton.classList.remove('fa-pause-circle');
+            playPauseButton.classList.add('fa-play-circle');
+        });
+
+        // Update current time and total time
+        audioPlayer.addEventListener('timeupdate', function () {
+            currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+            timeSlider.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        });
+
+        // Set total time when metadata is loaded
+        audioPlayer.addEventListener('loadedmetadata', function () {
+            totalTimeElement.textContent = formatTime(audioPlayer.duration);
+        });
+
+        // Seek functionality
+        timeSlider.addEventListener('input', function () {
+            const seekTime = (timeSlider.value / 100) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
+
+        // Volume control functionality
+        volumeRange.addEventListener('input', function () {
+            audioPlayer.volume = volumeRange.value / 100;
+        });
+
+        // Set initial volume to max
+        audioPlayer.volume = 1;
+        volumeRange.value = 100;
+    });
+
+
     // Get audio element
     var audio = document.getElementById("audio-player");
 
