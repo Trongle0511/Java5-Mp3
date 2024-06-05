@@ -1,5 +1,6 @@
 package com.example.music_mp3.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class SongsEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "albumid")
+    @JsonIgnore
     private AlbumsEntity album;
 
     @ManyToOne
@@ -36,5 +38,6 @@ public class SongsEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "genreid")
+    @JsonIgnore
     private GenresEntity genre;
 }

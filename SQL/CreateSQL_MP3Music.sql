@@ -89,3 +89,4 @@ CREATE TABLE PlaylistSongs (
     FOREIGN KEY (songid) REFERENCES Songs(songid),
     PRIMARY KEY (playlistid, songid)
 );
+select * from Songs

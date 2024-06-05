@@ -1,5 +1,7 @@
 package com.example.music_mp3.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,10 +33,8 @@ public class AccountsEntity{
     @Column(name = "role")
     private Boolean role;
 
-//    @Column(name = "reset_token")
-//    private String resetToken;
-
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @JsonBackReference
     private UserEntity user;
 
 

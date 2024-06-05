@@ -1,6 +1,7 @@
 package com.example.music_mp3.Controller;
 
 import com.example.music_mp3.Data.Entity.AccountsEntity;
+import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Service.AccountService;
 import com.example.music_mp3.utils.OTPUtil;
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +42,7 @@ public class HomeController {
                               @RequestParam("hashedPassword") String password,
                               Model model ) {
         if (authService.authenticateUser(email, password)) {
+            StaticVariable.sessionEmail = email;
             if (authService.isAdmin(email) ) {
                 // Đăng nhập thành công cho vai trò admin
                 // lưu email vào session
