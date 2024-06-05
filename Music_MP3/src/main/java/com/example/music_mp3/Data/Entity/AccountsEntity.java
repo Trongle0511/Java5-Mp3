@@ -2,12 +2,14 @@ package com.example.music_mp3.Data.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "Account")
 public class AccountsEntity{
@@ -29,8 +31,8 @@ public class AccountsEntity{
     @Column(name = "role")
     private Boolean role;
 
-    @Column(name = "reset_token")
-    private String resetToken;
+//    @Column(name = "reset_token")
+//    private String resetToken;
 
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private UserEntity user;
