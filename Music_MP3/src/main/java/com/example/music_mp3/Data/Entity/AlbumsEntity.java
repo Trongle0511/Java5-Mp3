@@ -1,5 +1,6 @@
 package com.example.music_mp3.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class AlbumsEntity {
     private String album_name;
 
     @OneToMany(mappedBy = "album")
+    @JsonBackReference
     private List<SongsEntity> songs;
 }
