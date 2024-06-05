@@ -3,11 +3,14 @@ package com.example.music_mp3.Controller;
 import com.example.music_mp3.Data.Entity.AccountsEntity;
 import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Service.AccountService;
+import com.example.music_mp3.utils.OTPUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -62,12 +65,17 @@ public class HomeController {
             return "redirect:/login";
         }
     }
-
+    //VanHiep Begin
     @GetMapping("/register")
     public String register() {
         return "Admin/auth/register";
     }
 
+    @GetMapping("/confirmOTP")
+    public String confirmOTP() {
+        return "Admin/auth/confirmOtp";
+    }
+    //VanHiep End
     @GetMapping("/forgot-password")
     public String forgotpassword() {
         return "Admin/auth/forgot-password";
