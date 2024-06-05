@@ -1,5 +1,6 @@
 package com.example.music_mp3.Data.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -30,6 +31,7 @@ public class UserEntity {
 
     @OneToOne
     @JoinColumn(name = "account_ID", referencedColumnName = "user_Id")
+    @JsonIgnore
     private AccountsEntity account;
 
 

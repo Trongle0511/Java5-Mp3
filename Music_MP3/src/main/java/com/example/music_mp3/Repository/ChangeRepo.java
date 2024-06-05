@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends JpaRepository<AccountsEntity, Integer> {
+public interface ChangeRepo extends JpaRepository<AccountsEntity,Integer> {
     AccountsEntity findByEmail(String email);
+    AccountsEntity save(AccountsEntity account);
+
 
 }
