@@ -1,8 +1,8 @@
 package com.example.music_mp3.Repository;
 
-import com.example.music_mp3.Data.DTO.SongDTO;
-import com.example.music_mp3.Data.DTO.SongInsertDto;
+
 import com.example.music_mp3.Data.Entity.SongsEntity;
+import com.example.music_mp3.Data.Model.SongInsertM;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
