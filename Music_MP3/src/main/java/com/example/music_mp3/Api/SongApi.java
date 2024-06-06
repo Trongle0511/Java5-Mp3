@@ -1,15 +1,22 @@
 package com.example.music_mp3.Api;
 
+import com.example.music_mp3.Data.DTO.SongAndArtistInsertDto;
 import com.example.music_mp3.Data.DTO.SongDTO;
-import com.example.music_mp3.Data.DTO.SongInsertDto;
 import com.example.music_mp3.Data.Entity.SongsEntity;
+import com.example.music_mp3.Data.Model.SongInsertM;
 import com.example.music_mp3.Data.Model.SongM;
 import com.example.music_mp3.Service.ServiceImpl.SongServiceImpl;
 import com.example.music_mp3.Service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api-public/song")
 public class SongApi {
+    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @Autowired
     private SongServiceImpl songServiceImpl;
 
@@ -54,9 +62,75 @@ public class SongApi {
         }
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<?> saveSong(@RequestBody SongInsertDto songInsertDto) {
-        SongsEntity savedSong = songService.saveSong(songInsertDto);
-        return ResponseEntity.ok(savedSong);
+    @PostMapping("/addSongAndArtist")
+    public ResponseEntity<?> addSongAndArtist(@RequestParam("song_name") String songName,
+                                              @RequestParam("image") MultipartFile image,
+                                              @RequestParam("audio_file") MultipartFile audioFile,
+                                              @RequestParam("artist_name") String artistName) {
+        // Lưu file hình ảnh
+        String imagePath = null;
+        if (image != null && !image.isEmpty()) {
+            try {
+                Path path = CURRENT_FOLDER.resolve("src\\main\\resources\\templates\\Home\\library\\image").resolve(image.getOriginalFilename());
+                Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                imagePath = image.getOriginalFilename();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to store image", e);
+            }
+        }
+
+        // Lưu file audio
+        String audioPath = null;
+        if (audioFile != null && !audioFile.isEmpty()) {
+            try {
+                Path path = CURRENT_FOLDER.resolve("src\\main\\resources\\templates\\Home\\library\\Music").resolve(audioFile.getOriginalFilename());
+                Files.copy(audioFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                audioPath = audioFile.getOriginalFilename();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to store audio file", e);
+            }
+        }
+
+        SongAndArtistInsertDto songAndArtistInsertDto = new SongAndArtistInsertDto();
+        songAndArtistInsertDto.setSong_name(songName);
+        songAndArtistInsertDto.setArtist_name(artistName);
+        songAndArtistInsertDto.setImage(imagePath);
+        songAndArtistInsertDto.setAudio_file(audioPath);
+
+        Map<String, Object> result = new HashMap<>();
+        try {
+            SongsEntity savedSong = songService.saveSongAndArtist(songAndArtistInsertDto);
+            result.put("success", true);
+            result.put("message", "Call API Insert Song and Artist success !");
+            result.put("data", savedSong);
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "Call API Insert Song and Artist false !");
+            result.put("data", null);
+            return ResponseEntity.status(500).body(result);
+        }
     }
+
+    @GetMapping("/show-song")
+    public ResponseEntity<?> showSong() {
+        List<SongInsertM> song = songService.findAllSongInsertM();
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("success", true);
+            result.put("message", "Call API success !");
+            result.put("data", song);
+            return ResponseEntity.ok(result);
+        }catch(Exception e) {
+            result.put("success", false);
+            result.put("message", "Call API false !");
+            result.put("data", null);
+            return ResponseEntity.status(500).body(result);
+        }
+
+    }
+
 }
