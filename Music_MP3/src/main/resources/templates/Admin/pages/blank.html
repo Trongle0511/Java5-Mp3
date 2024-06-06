@@ -1088,6 +1088,24 @@
           <!-- Main content -->
           <div class="flex items-center justify-center flex-1 h-full p-4">
             <main>
+              <div class="insertSong">
+                <button class="open_modal_insertSong"><i class="fa fa-plus"></i></button>
+                <div class="modal">
+                  <div class="modal_inner">
+                    <div class="modal_header">
+                      <h2>welcom</h2>
+<!--                      <i class="">x</i>-->
+                    </div>
+                    <div class="modal_body">
+                      đây là phần body modal
+                    </div>
+                    <div class="modal_footer">
+                      <button class="close">Close</button>
+                     <button class="submit">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="header_fixed">
                 <table id="tableInsertSong">
                   <thead>
@@ -1108,7 +1126,6 @@
                       <td>1</td>
                       <td>1</td>
                       <td>
-                        <button><i class="fas fa-trash-alt"></i></button>
                         <button><i class="fas fa-edit"></i></button>
                       </td>
                     </tr>
@@ -1120,7 +1137,6 @@
                       <td>1</td>
                       <td>1</td>
                       <td>
-                        <button><i class="fas fa-trash-alt"></i></button>
                         <button><i class="fas fa-edit"></i></button>
                       </td>
                     </tr><tr>
@@ -1131,7 +1147,6 @@
                       <td>1</td>
                       <td>1</td>
                       <td>
-                        <button><i class="fas fa-trash-alt"></i></button>
                         <button><i class="fas fa-edit"></i></button>
                       </td>
                     </tr>
@@ -1584,5 +1599,22 @@
         }
       }
     </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var openButton = document.querySelector('.open_modal_insertSong');
+      var modal = document.querySelector('.modal');
+      var closeButton = document.querySelector('.close');
+
+      openButton.addEventListener('click', function() {
+        modal.style.display = 'flex';
+      });
+
+      closeButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+    });
+
+  </script>
   </body>
 </html>
