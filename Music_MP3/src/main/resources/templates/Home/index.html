@@ -72,9 +72,10 @@
     <!-- this is for notification bell -->
 
     <!-- this is for profile picture -->
-    <div class="profile-picture">
-        <a href="/login">
-            <img src="media/profile_picture.svg"></a>
+    <div class="profile-picture" id="profile-picture">
+        <a href="#">
+            <img src="media/profile_picture.svg">
+        </a>
     </div>
 </nav>
 <main>
@@ -1322,7 +1323,23 @@
 
 
 </script>
-
+<script>
+    document.getElementById("profile-picture").addEventListener("click", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/check-login-status", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var isLoggedIn = xhr.responseText;
+                if (isLoggedIn === "true") {
+                    window.location.href = "/myprofile";
+                } else {
+                    window.location.href = "/login";
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
 
 </body>
 
