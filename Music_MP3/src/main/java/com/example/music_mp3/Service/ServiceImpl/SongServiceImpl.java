@@ -1,11 +1,12 @@
 package com.example.music_mp3.Service.ServiceImpl;
 
+import com.example.music_mp3.Data.DTO.SongAndArtistInsertDto;
 import com.example.music_mp3.Data.DTO.SongDTO;
-import com.example.music_mp3.Data.DTO.SongInsertDto;
 import com.example.music_mp3.Data.Entity.AlbumsEntity;
 import com.example.music_mp3.Data.Entity.ArtistsEntity;
 import com.example.music_mp3.Data.Entity.GenresEntity;
 import com.example.music_mp3.Data.Entity.SongsEntity;
+import com.example.music_mp3.Data.Model.SongInsertM;
 import com.example.music_mp3.Data.Model.SongM;
 import com.example.music_mp3.Repository.AlbumRepo;
 import com.example.music_mp3.Repository.ArtistRepo;
@@ -43,32 +44,39 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public SongsEntity saveSong(SongInsertDto songInsertDto) {
+    public SongsEntity saveSongAndArtist(SongAndArtistInsertDto songAndArtistInsertDto) {
+
+
+        // Tạo và lưu nghệ sĩ mới
+        ArtistsEntity artist = new ArtistsEntity();
+        artist.setArtists_name(songAndArtistInsertDto.getArtist_name());
+        artist = artistRepo.save(artist);
+
+        // Tạo và lưu bài hát mới
         SongsEntity song = new SongsEntity();
-        song.setSong_name(songInsertDto.getSong_name());
-        song.setImage(songInsertDto.getImage());
-        song.setAudio_file(songInsertDto.getAudio_file());
-
-        AlbumsEntity album = findAlbumById(songInsertDto.getAlbumid());
-        ArtistsEntity artist = findArtistById(songInsertDto.getArtistid());
-        GenresEntity genre = findGenreById(songInsertDto.getGenreid());
-
-        song.setAlbum(album);
+        song.setSong_name(songAndArtistInsertDto.getSong_name());
+        song.setImage(songAndArtistInsertDto.getImage());
+        song.setAudio_file(songAndArtistInsertDto.getAudio_file());
+        song.setAlbum(findAlbumById(songAndArtistInsertDto.getAlbumid()));
+        song.setGenre(findGenreById(songAndArtistInsertDto.getGenreid()));
         song.setArtist(artist);
-        song.setGenre(genre);
-
         return songRepo.save(song);
     }
 
-    private AlbumsEntity findAlbumById(int albumId) {
+    @Override
+    public List<SongInsertM> findAllSongInsertM() {
+        List<SongsEntity> listSongsE = songRepo.findAll();
+        return SongInsertM.convertListSongEToListSongM(listSongsE);
+    }
+
+
+    private AlbumsEntity findAlbumById(Integer albumId) {
+        if (albumId == null) return null;
         return albumRepo.findById(albumId).orElse(null);
     }
 
-    private ArtistsEntity findArtistById(int artistId) {
-        return artistRepo.findById(artistId).orElse(null);
-    }
-
-    private GenresEntity findGenreById(int genreId) {
+    private GenresEntity findGenreById(Integer genreId) {
+        if (genreId == null) return null;
         return genreRepo.findById(genreId).orElse(null);
     }
 
