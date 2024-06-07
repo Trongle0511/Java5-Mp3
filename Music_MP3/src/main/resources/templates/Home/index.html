@@ -66,7 +66,7 @@
             <!-- magnifying glass- search icon -->
             <i class="fas fa-search search-ico"></i>
         </div>
-        <input type="text" name="search" placeholder="Search">
+        <input type="text" id="search-input" name="search" placeholder="Search">
     </div>
 
     <!-- this is for notification bell -->
@@ -775,6 +775,7 @@
         const resetButton = document.getElementById('reset-button');
         const volumeIcon = document.getElementById('volume-icon');
         const randomButton = document.getElementById('random-button');
+        const searchInput = document.getElementById('search-input');
 
         let currentSong = null;
 
