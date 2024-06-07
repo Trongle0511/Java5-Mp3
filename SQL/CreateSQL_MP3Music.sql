@@ -90,3 +90,25 @@ CREATE TABLE PlaylistSongs (
     PRIMARY KEY (playlistid, songid)
 );
 select * from Songs
+
+GO
+DROP TRIGGER trg_CreateUserOnAccountInsert;
+
+GO
+CREATE TRIGGER trg_CreateUserOnAccountInsert
+ON Account
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Insert dữ liệu vào bảng Users từ bảng Account
+    INSERT INTO Users (name, phone, account_id)
+    SELECT 
+        CASE WHEN i.username IS NOT NULL THEN ' ' ELSE u.name END,
+        CASE WHEN i.username IS NOT NULL THEN ' ' ELSE u.phone END,
+        i.user_id
+    FROM inserted i
+    LEFT JOIN Account a ON i.user_id = a.user_id
+    LEFT JOIN Users u ON a.user_id = u.account_id;
+END;

@@ -14,6 +14,11 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    public String getUsernameByEmail(String email) {
+        AccountsEntity account = accountRepository.findByEmail(email);
+        return account != null ? account.getUsername() : null;
+    }
+
     public boolean authenticateUser(String email, String password) {
         AccountsEntity account = accountRepository.findByEmail(email);
         if (account == null || password == null) {
