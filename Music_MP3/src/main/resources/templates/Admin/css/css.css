@@ -36,3 +36,60 @@ tr:hover td{
     background-color: #0891b2;
 
 }
+.open_modal_insertSong{
+    margin-top: 20px;
+    height: 40px;
+    width: 40px;
+    border:  2px solid black;
+    outline: none;
+    border-radius: 100%;
+    position: relative;
+    left: 95%;
+}
+.modal{
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    background-color: rgba(255, 255, 255, 1);
+    transform: translate(-50%);
+    z-index: 1000;
+}
+.modal_inner{
+    height: 400px;
+    width: 600px;
+    position: relative;
+    top: 50%;
+    margin: auto;
+    color: black;
+
+
+}
+.modal_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #155e75;
+    color: white;
+}
+.modal_body{
+    padding: 15px;
+    height: 250px;
+
+}
+.modal_footer{
+    padding: 30px;
+    text-align: right;
+}
+.modal_footer button{
+    padding: 10px 20px;
+    color: white;
+    background: #20306a;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+
