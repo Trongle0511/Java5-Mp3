@@ -14,6 +14,7 @@
     <script src="https://kit.fontawesome.com/2d9b67a497.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+
 </head>
 <!-- body -->
 <style>
@@ -21,6 +22,26 @@
     input[type="range"]::-webkit-slider-runnable-track {
         background: linear-gradient(to right, #3498db 0%, #3498db calc(var(--range-value, 0%)), #ddd calc(var(--range-value, 0%) + 1px), #ddd 100%);
     }
+
+    /* CSS cho các nút sắp xếp */
+    button#sort-asc,
+    button#sort-desc {
+        /* CSS của cả hai nút */
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+    }
+
+    button#sort-asc:hover,
+    button#sort-desc:hover {
+        /* CSS hover của cả hai nút */
+        background-color: #0056b3;
+    }
+
+
 </style>
 <body>
 <!-- top navigation bar -->
@@ -45,14 +66,16 @@
             <!-- magnifying glass- search icon -->
             <i class="fas fa-search search-ico"></i>
         </div>
-        <input type="text" name="search" placeholder="Search">
+        <input type="text" id="search-input" name="search" placeholder="Search">
     </div>
+
     <!-- this is for notification bell -->
 
     <!-- this is for profile picture -->
-    <div class="profile-picture">
-        <a href="/login">
-            <img src="media/profile_picture.svg"></a>
+    <div class="profile-picture" id="profile-picture">
+        <a href="#">
+            <img src="media/profile_picture.svg">
+        </a>
     </div>
 </nav>
 <main>
@@ -72,12 +95,16 @@
             <h1 style="margin-bottom: 12px;">
                 Latest Release
             </h1>
+            <div>
+                <button id="sort-asc">Sort Ascending</button>
+                <button id="sort-desc">Sort Descending</button>
+            </div>
             <!-- this is the content of the latest release section -->
             <!-- it will contain the "cards" -->
             <div class="latest-release-content" id="song-container">
-<!--                <div id="song-container">-->
+                <!--                <div id="song-container">-->
 
-<!--                </div>-->
+                <!--                </div>-->
 
             </div>
         </div>
@@ -702,11 +729,11 @@
     </div>
     <div class="player">
         <div class="controls">
-            <div><i class="fas fa-random"></i></div>
-            <div><i class="fas fa-step-backward"></i></div>
+            <div id="random-button"><i class="fas fa-random"></i></div>
+            <div id="prev-button"><i class="fas fa-step-backward"></i></div>
             <div id="play-pause-button"><i class="fas fa-play-circle"></i></div>
-            <div><i class="fas fa-step-forward"></i></div>
-            <div><i class="fas fa-redo"></i></div>
+            <div id="next-button"><i class="fas fa-step-forward"></i></div>
+            <div id="reset-button"><i class="fas fa-redo"></i></div>
         </div>
         <div id="slider">
             <div class="time">
@@ -721,9 +748,9 @@
         </div>
     </div>
     <div class="extras">
-<!--        <div><i class="fas fa-list-ul"></i></div>-->
-<!--        <div><i class="fas fa-laptop"></i></div>-->
-        <div><i class="fas fa-volume-up"></i></div>
+        <div><i class="fas fa-list-ul"></i></div>
+        <div><i class="fas fa-laptop"></i></div>
+        <div id="volume-icon"><i class="fas fa-volume-up"></i></div>
         <div class="slidecontainer" style="width:30%;">
             <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0;">
         </div>
@@ -744,8 +771,15 @@
         const totalTimeElement = document.getElementById('total-time');
         const timeSlider = document.getElementById('songTime');
         const volumeRange = document.getElementById('volumeRange');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const resetButton = document.getElementById('reset-button');
+        const volumeIcon = document.getElementById('volume-icon');
+        const randomButton = document.getElementById('random-button');
+        const searchInput = document.getElementById('search-input');
 
         let currentSong = null;
+
 
         // Function to format time in mm:ss
         function formatTime(seconds) {
@@ -764,16 +798,19 @@
             return axios.get(`/api-public/song/findSongId?songId=${songId}`);
         }
 
+
         // Function to render songs
         function renderSongs(songs) {
+            songContainer.innerHTML = '';
             songs.forEach(song => {
                 const songCard = `
-            <div class="card" id="playSong">
+            <div class="card" id="playSong" data-song-name="${song.song_name}">
                 <div>
                     <img src="library/image/${song.image}">
                     <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
-                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}">
-                        <i class="fas fa-play" style="width:100%; height:100%; display:inline-block"></i>
+                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}"
+                         style="display: flex; justify-content: center; align-items: center; width: 100px; height: 100px;">
+                        <i class="fas fa-play" style="width:50%; height:50%;"></i>
                     </div>
                 </div>
                 <div class="song-description">
@@ -804,6 +841,8 @@
                 </div>
             </div>
         `;
+
+
                 songContainer.innerHTML += songCard;
             });
 
@@ -861,13 +900,62 @@
                 });
             });
         }
+
+        // tìm kiếm
+        searchInput.addEventListener('input', function () {
+            const query = searchInput.value.toLowerCase();
+            getAllSongs()
+                .then(response => {
+                    if (response.status === 200 && response.data.status === 'success') {
+                        const songs = response.data.data.filter(song => song.song_name.toLowerCase().includes(query));
+
+                        if (songs.length === 0) {
+                            // Nếu không có bài hát nào khớp, hiển thị thông báo
+                            renderNoSongsFound();
+                        } else {
+                            // Nếu có bài hát, hiển thị chúng
+                            renderSongs(songs);
+                        }
+                    } else {
+                        console.error('Failed to fetch songs');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+        // Hàm để hiển thị thông báo "Không có bài hát"
+        function renderNoSongsFound() {
+            songContainer.innerHTML = '<p>(Không có bài hát phừ hợp với tìm kiếm)</p>';
+        }
+
         // Initial call to get all songs
+        // getAllSongs()
+        //     .then(function (response) {
+        //         if (response.status === 200 && response.data.status === 'success') {
+        //             const songs = response.data.data;
+        //             console.log('All Songs:', songs);
+        //             renderSongs(songs);
+        //             playButtons = document.querySelectorAll('.play-button'); // Gán giá trị cho biến playButtons
+        //         } else {
+        //             alert(response.data.message || 'No songs found');
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.error('Error fetching songs:', error);
+        //     });
         getAllSongs()
             .then(function (response) {
                 if (response.status === 200 && response.data.status === 'success') {
                     const songs = response.data.data;
-                    console.log('All Songs:', songs);
-                    renderSongs(songs);
+                    if (songs.length === 0) {
+                        renderNoSongsFound();
+                    } else {
+                        console.log('All Songs:', songs);
+                        renderSongs(songs);
+                    }
                 } else {
                     alert(response.data.message || 'No songs found');
                 }
@@ -920,6 +1008,211 @@
         // Set initial volume to max
         audioPlayer.volume = 1;
         volumeRange.value = 100;
+
+        // // Next button functionality
+        // nextButton.addEventListener('click', function () {
+        //     const currentButton = document.querySelector('.current-song');
+        //     const playButtons = document.querySelectorAll('.play-button');
+        //     const currentIndex = Array.from(playButtons).indexOf(currentButton);
+        //     let nextIndex;
+        //
+        //     // if (currentIndex === playButtons.length - 1) {
+        //     //     nextIndex = 0; // Quay lại bài hát đầu nếu đang ở cuối danh sách
+        //     // } else {
+        //     //     nextIndex = currentIndex + 1;
+        //     // }
+        //     if (currentIndex === 4) {
+        //         nextIndex = 0; // Quay lại bài hát đầu nếu đang ở bài hát số 4
+        //     } else {
+        //         nextIndex = currentIndex + 1;
+        //     }
+        //
+        //     const nextButton = playButtons[nextIndex];
+        //     loadAndPlaySong(nextButton);
+        // });
+
+        // xử lí nút next
+        nextButton.addEventListener('click', function () {
+            if (isRandomActive) { // Kiểm tra xem nút Random có được kích hoạt không
+                const playButtons = document.querySelectorAll('.play-button');
+                const randomIndex = Math.floor(Math.random() * playButtons.length); // Chọn một số ngẫu nhiên từ 0 đến độ dài danh sách bài hát
+                const randomButton = playButtons[randomIndex]; // Lấy phần tử ở vị trí ngẫu nhiên trong danh sách bài hát
+                loadAndPlaySong(randomButton); // Tải và phát bài hát từ phần tử đã chọn ngẫu nhiên
+            } else { // Nếu nút Random không được kích hoạt, thực hiện chức năng Next bình thường
+                const currentButton = document.querySelector('.current-song');
+                const playButtons = document.querySelectorAll('.play-button');
+                const currentIndex = Array.from(playButtons).indexOf(currentButton);
+                let nextIndex;
+
+                if (currentIndex === playButtons.length - 1) {
+                    nextIndex = 0; // Quay lại bài hát đầu nếu đang ở cuối danh sách
+                } else {
+                    nextIndex = currentIndex + 1;
+                }
+
+                const nextButton = playButtons[nextIndex];
+                loadAndPlaySong(nextButton);
+            }
+        });
+
+        // // Previous button functionality
+        // prevButton.addEventListener('click', function () {
+        //     const currentButton = document.querySelector('.current-song');
+        //     const playButtons = document.querySelectorAll('.play-button');
+        //     const currentIndex = Array.from(playButtons).indexOf(currentButton);
+        //     let prevIndex;
+        //
+        //     // if (currentIndex === 0) {
+        //     //     prevIndex = playButtons.length - 1; // Quay lại bài hát cuối nếu đang ở đầu danh sách
+        //     // } else {
+        //     //     prevIndex = currentIndex - 1;
+        //     // }
+        //     if (currentIndex === 0) {
+        //         prevIndex = 4; // Quay lại bài hát số 4 nếu đang ở bài hát đầu
+        //     } else {
+        //         prevIndex = currentIndex - 1;
+        //     }
+        //
+        //     const prevButton = playButtons[prevIndex];
+        //     loadAndPlaySong(prevButton);
+        // });
+
+
+        // xử lí nút prev
+        prevButton.addEventListener('click', function () {
+            if (isRandomActive) { // Kiểm tra xem nút Random có được kích hoạt không
+                const playButtons = document.querySelectorAll('.play-button');
+                const randomIndex = Math.floor(Math.random() * playButtons.length); // Chọn một số ngẫu nhiên từ 0 đến độ dài danh sách bài hát
+                const randomButton = playButtons[randomIndex]; // Lấy phần tử ở vị trí ngẫu nhiên trong danh sách bài hát
+                loadAndPlaySong(randomButton); // Tải và phát bài hát từ phần tử đã chọn ngẫu nhiên
+            } else { // Nếu nút Random không được kích hoạt, thực hiện chức năng Prev bình thường
+                const currentButton = document.querySelector('.current-song');
+                const playButtons = document.querySelectorAll('.play-button');
+                const currentIndex = Array.from(playButtons).indexOf(currentButton);
+                let prevIndex;
+
+                if (currentIndex === 0) {
+                    prevIndex = playButtons.length - 1; // Quay lại bài hát cuối nếu đang ở đầu danh sách
+                } else {
+                    prevIndex = currentIndex - 1;
+                }
+
+                const prevButton = playButtons[prevIndex];
+                loadAndPlaySong(prevButton);
+            }
+        });
+
+
+        // xử lí nút reset
+        resetButton.addEventListener('click', function () {
+            audioPlayer.currentTime = 0;
+        });
+
+        // // Function to load and play a song
+        // function loadAndPlaySong(button) {
+        //     const songId = button.getAttribute('data-song-id');
+        //     const songSrc = button.getAttribute('data-song-src');
+        //     const songImage = button.getAttribute('data-song-image');
+        //     const songName = button.getAttribute('data-song-name');
+        //     const songAuthor = button.getAttribute('data-song-author');
+        //     playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+        //
+        //     // Update footer with song details
+        //     footerSongImage.src = songImage;
+        //     footerSongName.textContent = songName;
+        //     footerSongAuthor.textContent = songAuthor;
+        //
+        //     // Update the audio source and play the song
+        //     audioPlayer.src = songSrc;
+        //     audioPlayer.play();
+        //
+        //     // Set the volume to maximum
+        //     audioPlayer.volume = 1;
+        //     volumeRange.value = 100;
+        //
+        //     // Update the play/pause button
+        //     playPauseButton.classList.remove('fa-play-circle');
+        //     playPauseButton.classList.add('fa-pause-circle');
+        //
+        //     // Set the current song
+        //     currentSong = {
+        //         songId,
+        //         songSrc,
+        //         songImage,
+        //         songName,
+        //         songAuthor
+        //     };
+        //     console.log(songSrc)
+        //     // Remove 'current-song' class from current button
+        //     const currentButton = document.querySelector('.current-song');
+        //     if (currentButton) {
+        //         currentButton.classList.remove('current-song');
+        //     }
+        //
+        //     // Add 'current-song' class to the new button
+        //     button.classList.add('current-song');
+        // }
+
+
+        // Hàm load và phát bài hát
+        function loadAndPlaySong(button) {
+            const songId = button.getAttribute('data-song-id');
+            const songSrc = button.getAttribute('data-song-src');
+            const songImage = button.getAttribute('data-song-image');
+            const songName = button.getAttribute('data-song-name');
+            const songAuthor = button.getAttribute('data-song-author');
+
+            // Cập nhật footer với chi tiết bài hát
+            footerSongImage.src = songImage;
+            footerSongName.textContent = songName;
+            footerSongAuthor.textContent = songAuthor;
+
+            // Cập nhật nguồn audio và phát bài hát
+            audioPlayer.src = songSrc;
+            audioPlayer.play();
+
+            // Đặt âm lượng về tối đa
+            audioPlayer.volume = 1;
+            volumeRange.value = 100;
+
+            // Cập nhật nút play/pause
+            playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+            playPauseButton.classList.remove('fa-play-circle');
+            playPauseButton.classList.add('fa-pause-circle');
+
+            // Loại bỏ lớp 'current-song' từ nút hiện tại
+            const currentButton = document.querySelector('.current-song');
+            if (currentButton) {
+                currentButton.classList.remove('current-song');
+            }
+
+            // Thêm lớp 'current-song' vào nút mới
+            button.classList.add('current-song');
+        }
+
+        // Xử lý sự kiện cho nút Random
+        let isRandomActive = false;
+
+        randomButton.addEventListener('click', function () {
+            isRandomActive = !isRandomActive; // Đảo ngược trạng thái của nút Random
+            if (isRandomActive) {
+                randomButton.style.color = 'green'; // Đổi màu nút Random thành xanh
+            } else {
+                randomButton.style.color = ''; // Đặt màu trở lại mặc định
+            }
+        });
+
+
+        // xử lí cho nút tắt giảm âm lượng
+        volumeIcon.addEventListener('click', function () {
+            if (audioPlayer.volume > 0) {
+                audioPlayer.volume = 0;
+                volumeRange.value = 0;
+            } else {
+                audioPlayer.volume = 1;
+                volumeRange.value = 100;
+            }
+        });
     });
 
 
@@ -992,8 +1285,61 @@
         timeSlider.value = percentage;
         timeSlider.style.setProperty('--range-value', percentage + '%');
     });
-</script>
 
+    // sắp xếp
+    document.getElementById('sort-asc').addEventListener('click', function () {
+        sortSongs('asc');
+    });
+
+    document.getElementById('sort-desc').addEventListener('click', function () {
+        sortSongs('desc');
+    });
+
+    // Các hàm khác trong JavaScript
+    function sortSongs(order) {
+        const container = document.getElementById('song-container');
+        const songs = Array.from(container.getElementsByClassName('card'));
+
+        songs.sort(function (a, b) {
+            const nameA = (a.getAttribute('data-song-name') || '').toUpperCase();
+            const nameB = (b.getAttribute('data-song-name') || '').toUpperCase();
+
+            if (order === 'asc') {
+                return nameA.localeCompare(nameB);
+            } else if (order === 'desc') {
+                return nameB.localeCompare(nameA);
+            }
+        });
+
+        // Clear the container and append sorted songs
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        songs.forEach(function (song) {
+            container.appendChild(song);
+        });
+    }
+
+
+</script>
+<script>
+    document.getElementById("profile-picture").addEventListener("click", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/check-login-status", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var isLoggedIn = xhr.responseText;
+                if (isLoggedIn === "true") {
+                    window.location.href = "/myprofile";
+                } else {
+                    window.location.href = "/login";
+                }
+            }
+        };
+        xhr.send();
+    });
+</script>
 
 </body>
 

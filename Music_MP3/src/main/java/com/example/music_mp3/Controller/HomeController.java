@@ -1,12 +1,15 @@
 package com.example.music_mp3.Controller;
 
 import com.example.music_mp3.Data.Entity.AccountsEntity;
+import com.example.music_mp3.Data.Entity.UserEntity;
 import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Repository.AccountRepository;
 import com.example.music_mp3.Service.AccountService;
-import com.example.music_mp3.utils.OTPUtil;
+import com.example.music_mp3.Service.ProfileService;
+import com.example.music_mp3.Service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import com.example.music_mp3.Service.MailerService;
 import com.example.music_mp3.utils.PasswordEncoderUtil;
@@ -17,16 +20,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import java.net.URI;
 import java.util.Random;
 import java.util.UUID;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("/MusicMp3")
     public String Home() {
@@ -35,6 +40,13 @@ public class HomeController {
 
     @Autowired
     private AccountService authService;
+
+    @Autowired
+    private ProfileService profileService;
+
+    @Autowired
+    private UserService userService;
+
 
     @Autowired
     private HttpSession session;
@@ -117,6 +129,81 @@ public class HomeController {
         return "Admin/auth/confirmOtp";
     }
     //VanHiep End
+
+    //VanHiep - TuongVi Begin
+
+    @GetMapping("/myprofile")
+    public String myprofile(Model model) {
+        String email = (String) session.getAttribute("email");
+//        String username = (String) session.getAttribute("username");
+
+        // Tìm thông tin người dùng dựa trên email
+        AccountsEntity userAccount = profileService.findByEmail(email);
+
+
+        UserEntity user = userService.getCurrentUser();
+
+        // Thêm thông tin người dùng vào model
+        model.addAttribute("username", userAccount.getUsername());
+        model.addAttribute("email", userAccount.getEmail());
+
+        if (user != null && user.getName() != null && user.getPhone() != null) {
+            // Nếu có, hiển thị thông tin name và phone trên HTML
+            model.addAttribute("name", user.getName());
+            model.addAttribute("phone", user.getPhone());
+            return "Home/MyProfile";
+        } else {
+            // Nếu không, yêu cầu nhập thông tin và hiển thị form nhập liệu trên HTML
+            return "Home/MyProfile";
+        }
+    }
+
+    @PostMapping("/updateProfile")
+    public String updateProfile(@RequestParam("name") String name,
+                                @RequestParam("phone") String phone,
+                                HttpSession session) {
+        UserEntity user = userService.getCurrentUser();
+        if (user != null) {
+            user.setName(name);
+            user.setPhone(phone);
+            boolean updateSuccess = userService.saveOrUpdateUser(user);
+            if (updateSuccess) {
+                return "redirect:/myprofile?updateSuccess=true";
+            } else {
+                return "redirect:/myprofile?updateSuccess=false";
+            }
+        } else {
+            return "redirect:/myprofile";
+        }
+    }
+
+
+    @GetMapping("/check-login-status")
+    @ResponseBody
+    public String checkLoginStatus(HttpSession session) {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa (dựa vào session)
+        boolean isLoggedIn = (session.getAttribute("email") != null);
+        if (isLoggedIn) {
+            System.out.println(isLoggedIn);
+            System.out.println("Logged in user email: " + session.getAttribute("email"));
+        } else {
+            System.out.println("No user is logged in.");
+        }
+        return String.valueOf(isLoggedIn);
+    }
+
+    @GetMapping("/logout")
+    @ResponseBody
+    public String logout(HttpSession session) {
+        // Xóa thông tin đăng nhập khỏi session
+        session.removeAttribute("email");
+
+        return "Logout successful";
+    }
+
+
+
+    //VanHiep - TuongVi End
     @GetMapping("/forgot-password")
     public String forgotpassword() {
         return "Admin/auth/check-email";

@@ -5,4 +5,5 @@ import com.example.music_mp3.Data.Entity.AccountsEntity;
 
 public interface ChangeService{
     AccountsEntity changeAccount(ChangePassworDto changePassworDto);
+    AccountsEntity findEmail(String email);
 }
