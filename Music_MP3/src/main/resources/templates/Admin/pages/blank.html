@@ -1662,7 +1662,7 @@
                   var newRow = tableBody.insertRow();
                   var imageCell = newRow.insertCell();
                   var image = document.createElement('img');
-                  image.src = "../../Home/library/image/" + (song.image || "");
+                  image.src = "/library/image/" + (song.image || "");
                   imageCell.appendChild(image);
                   var songNameCell = newRow.insertCell();
                   songNameCell.textContent = song.song_name;
@@ -1679,8 +1679,5 @@
               console.log("Lỗi");
             });
   </script>
-
-
-
   </body>
 </html>

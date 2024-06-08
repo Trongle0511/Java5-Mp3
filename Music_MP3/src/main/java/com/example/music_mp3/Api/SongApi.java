@@ -67,7 +67,7 @@ public class SongApi {
                                               @RequestParam("image") MultipartFile image,
                                               @RequestParam("audio_file") MultipartFile audioFile,
                                               @RequestParam("artist_name") String artistName) {
-        // Lưu file hình ảnh
+
         String imagePath = null;
         if (image != null && !image.isEmpty()) {
             try {
@@ -80,7 +80,6 @@ public class SongApi {
             }
         }
 
-        // Lưu file audio
         String audioPath = null;
         if (audioFile != null && !audioFile.isEmpty()) {
             try {
@@ -102,13 +101,13 @@ public class SongApi {
         Map<String, Object> result = new HashMap<>();
         try {
             SongsEntity savedSong = songService.saveSongAndArtist(songAndArtistInsertDto);
-            result.put("success", true);
+            result.put("status", true);
             result.put("message", "Call API Insert Song and Artist success !");
             result.put("data", savedSong);
 
             return ResponseEntity.ok(result);
         } catch (Exception e) {
-            result.put("success", false);
+            result.put("status", false);
             result.put("message", "Call API Insert Song and Artist false !");
             result.put("data", null);
             return ResponseEntity.status(500).body(result);
@@ -120,12 +119,12 @@ public class SongApi {
         List<SongInsertM> song = songService.findAllSongInsertM();
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("success", true);
+            result.put("status", true);
             result.put("message", "Call API success !");
             result.put("data", song);
             return ResponseEntity.ok(result);
         }catch(Exception e) {
-            result.put("success", false);
+            result.put("status", false);
             result.put("message", "Call API false !");
             result.put("data", null);
             return ResponseEntity.status(500).body(result);
