@@ -47,12 +47,8 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private HttpSession session;
-
-    @Autowired
-    private AccountService accountService;
 
     @Autowired
     private AccountRepository accountRepository;

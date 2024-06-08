@@ -24,7 +24,7 @@ public class ChangePasswordApi {
         Map<String,Object> result  = new HashMap<>();
         AccountsEntity accountsEntity = changeService.findEmail(StaticVariable.sessionEmail);
         if (accountsEntity == null) {
-            result.put("success", false);
+            result.put("status", false);
             result.put("message", "Tài khoản không tồn tại");
             result.put("data", null);
             return ResponseEntity.status(404).body(result);
@@ -35,12 +35,12 @@ public class ChangePasswordApi {
         boolean isPasswordMatch = passwordEncoder.matches(rawPassword, password);
         if (isPasswordMatch) {
             changeService.changeAccount(changePassworDto);
-            result.put("success", true);
+            result.put("status", true);
             result.put("message", "Đổi mật khẩu thành công");
             result.put("data", accountsEntity);
             return ResponseEntity.ok(result);
         } else {
-            result.put("success", false);
+            result.put("status", false);
             result.put("message", "Không đúng mật khẩu");
             result.put("data", null);
             return ResponseEntity.status(400).body(result);
