@@ -41,7 +41,11 @@
         background-color: #0056b3;
     }
 
-
+    .artist-name,
+    .song-views {
+        font-size: smaller;
+        opacity: 0.6; /* Mờ hơn */
+    }
 </style>
 <body>
 <!-- top navigation bar -->
@@ -395,315 +399,11 @@
             <hr>
             <p><a href="#" style="color:red; font-weight:bolder;">Close</a></p>
         </div>
-        <!-- this is the content of the playlist. it will be dynamic. -->
+
         <div class="playlist-content">
-            <!-- first playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <!-- index -->
-                    <div style="margin-right:4px;">
-                        01
-                    </div>
-                    <div class="coverer">
-                        <!-- coverer class is for those items which when hovered will show an effect -->
-                        <!-- in this effect, when the user hovers on the item, it will show black background -->
-                        <!-- with opacity value less than 1 and a play button icon at the center -->
-                        <img src="media/playlist/austin-neill-kKlVSrFbjYY-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <!-- name and author of the song -->
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <!-- like button -->
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- second playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        02
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/brian-suman-Y1V9Gy9O8Fw-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- third playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        03
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/jacob-avanzato-2tAbcGKiaBc-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- fourth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        04
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/josh-durham-VOyZSh3L-gw-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- fifth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        05
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/martin-engel-grafiker-hamburg-KLFB1AEPLwA-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- sixth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        06
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/neonbrand-MENIBa0eZeA-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Else
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- seventh playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        07
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/solozeta--VRtMRpcrVg-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- eighth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        08
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/stan-bonke-LIjUr3B9IXE-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- ninth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        09
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/vidar-nordli-mathisen-Me5rtdNmIrU-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- tenth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        10
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/valery-escobar-llanos-D46gUK33HVY-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- eleventh playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        11
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/thomas-millot-uyrYy3ogw58-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- twelfth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        12
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/vinicius-amnx-amano-ABaMFrKOGng-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Else
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
+
         </div>
+
     </aside>
 </main>
 <!-- main part of the page is over. -->
@@ -718,14 +418,6 @@
             <div>Imagine by John</div>
             <div>John Lennon</div>
         </div>
-<!--        <div class="heart-and-ban-icon">-->
-<!--            <span>-->
-<!--                <i class="far fa-heart"></i>-->
-<!--            </span>-->
-<!--            <span>-->
-<!--                <i class="fas fa-ban"></i>-->
-<!--            </span>-->
-<!--        </div>-->
     </div>
     <div class="player">
         <div class="controls">
@@ -872,7 +564,14 @@
                                 // Update the audio source and play the song
                                 audioPlayer.src = songSrc;
                                 audioPlayer.play();
-
+                                let isThirtySecondsReached = false;
+                                audioPlayer.addEventListener('timeupdate', function() {
+                                    console.log("Thời gian hiện tại:", audioPlayer.currentTime);
+                                    if (!isThirtySecondsReached && audioPlayer.currentTime >= 29) {
+                                        isThirtySecondsReached = true;
+                                        updateListenCount(songId);
+                                    }
+                                });
 
                                 // Set the volume to maximum
                                 audioPlayer.volume = 1;
@@ -1340,7 +1039,23 @@
         xhr.send();
     });
 </script>
-
+<script>
+    function updateListenCount(songId) {
+        console.log("Đã gọi hàm updateListenCount với songId:", songId);
+        axios.post('/update-listen-count', { songId: songId })
+            .then(function(response) {
+                if (response.data.status) {
+                    console.log("Cập nhật lượt nghe thành công!");
+                } else {
+                    console.error("Cập nhật lượt nghe thất bại!");
+                }
+            })
+            .catch(function(error) {
+                console.error("Có lỗi xảy ra khi cập nhật lượt nghe:", error);
+            });
+    }
+</script>
+<script src="JS/trending.js"></script>
 </body>
 
 </html>
