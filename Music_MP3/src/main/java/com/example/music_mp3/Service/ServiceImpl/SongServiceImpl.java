@@ -91,4 +91,13 @@ public class SongServiceImpl implements SongService {
         );
     }
 
+    //Văn Hip
+    @Override
+    public List<SongDTO> findSongsByArtistId(int artistId) {
+        List<SongsEntity> songsEntities = songRepo.findByArtist_Artistid(artistId);
+        return songsEntities.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -50,11 +50,15 @@
 
 
 
-
+    .artist-name,
+    .song-views {
+        font-size: smaller;
+        opacity: 0.6; /* Mờ hơn */
+    }
 </style>
 <body>
 <!-- top navigation bar -->
-<nav class="navigation-bar">
+<nav class="navigation-bar" style="padding-top: 20px">
     <!-- this div contains the logo and title os the page -->
     <div class="title-combo">
         <div class="website-logo">
@@ -124,107 +128,9 @@
                 Popular Artists
             </h1>
             <!-- this contains the content of the popular artists section -->
-            <div class="popular-artist-content">
-                <!-- if user clicks on any one artist, it will redirect the user to the second page -->
-                <!-- following is the list of artists -->
-                <!-- first artist -->
-                <a href="/detail">
-                    <div>
-                        <img src="media/popular artists/adele.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Adele
-                        </p>
-                    </div>
-                </a>
-                <!-- second artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/billie eilish.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Billie Eilish
-                        </p>
-                    </div>
-                </a>
-                <!-- third artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/bruno mars.jpg" width="15vw" height="10vw">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Bruno Mars
-                        </p>
-                    </div>
-                </a>
-                <!-- fourth artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/Camila Cabello.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Camila Cabello
-                        </p>
-                    </div>
-                </a>
-                <!-- fifth artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/drake.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Drake
-                        </p>
-                    </div>
-                </a>
-                <!-- 6th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/ed sheeran.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Ed Sheeran
-                        </p>
-                    </div>
-                </a><!-- 7th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/eminem.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Eminem
-                        </p>
-                    </div>
-                </a><!-- 8th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/Katy perry.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Katy Perry
-                        </p>
-                    </div>
-                </a>
-                <!-- 9th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/rudy mancuso.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Rudy Mancuso
-                        </p>
-                    </div>
-                </a>
-                <!-- 10th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/snoop dogg.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Snoop Dogg
-                        </p>
-                    </div>
-                </a>
+            <div class="popular-artist-content" id="artist-container">
+                <!-- Artists will be dynamically inserted here -->
+
             </div>
         </div>
         <!-- this is the music themes part, the one with the tri-gradient background -->
@@ -404,315 +310,11 @@
             <hr>
             <p><a href="#" style="color:#f80808; font-weight:bolder;">Close</a></p>
         </div>
-        <!-- this is the content of the playlist. it will be dynamic. -->
+
         <div class="playlist-content">
-            <!-- first playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <!-- index -->
-                    <div style="margin-right:4px;">
-                        01
-                    </div>
-                    <div class="coverer">
-                        <!-- coverer class is for those items which when hovered will show an effect -->
-                        <!-- in this effect, when the user hovers on the item, it will show black background -->
-                        <!-- with opacity value less than 1 and a play button icon at the center -->
-                        <img src="media/playlist/austin-neill-kKlVSrFbjYY-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <!-- name and author of the song -->
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <!-- like button -->
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- second playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        02
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/brian-suman-Y1V9Gy9O8Fw-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- third playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        03
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/jacob-avanzato-2tAbcGKiaBc-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- fourth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        04
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/josh-durham-VOyZSh3L-gw-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- fifth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        05
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/martin-engel-grafiker-hamburg-KLFB1AEPLwA-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- sixth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        06
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/neonbrand-MENIBa0eZeA-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Else
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- seventh playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        07
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/solozeta--VRtMRpcrVg-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- eighth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        08
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/stan-bonke-LIjUr3B9IXE-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Rosie Lowe
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- ninth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        09
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/vidar-nordli-mathisen-Me5rtdNmIrU-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- tenth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        10
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/valery-escobar-llanos-D46gUK33HVY-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Worry Bout Us
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- eleventh playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        11
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/thomas-millot-uyrYy3ogw58-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            New Skin
-                        </div>
-                        <p>
-                            Flume
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
-            <!-- twelfth playlist item -->
-            <div class=playlist-item>
-                <div class="left-content">
-                    <div style="margin-right:4px;">
-                        12
-                    </div>
-                    <div class="coverer">
-                        <img src="media/playlist/vinicius-amnx-amano-ABaMFrKOGng-unsplash.jpg">
-                        <div class="play-button">
-                            <i class="fas fa-play" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            Mirage
-                        </div>
-                        <p>
-                            Else
-                        </p>
-                    </div>
-                </div>
-                <div class="right-content">
-                    <i class="far fa-heart"></i>
-                </div>
-            </div>
+
         </div>
+
     </aside>
 </main>
 <!-- main part of the page is over. -->
@@ -727,14 +329,6 @@
             <div>Imagine by John</div>
             <div>John Lennon</div>
         </div>
-        <!--        <div class="heart-and-ban-icon">-->
-        <!--            <span>-->
-        <!--                <i class="far fa-heart"></i>-->
-        <!--            </span>-->
-        <!--            <span>-->
-        <!--                <i class="fas fa-ban"></i>-->
-        <!--            </span>-->
-        <!--        </div>-->
     </div>
     <div class="player">
         <div class="controls">
@@ -756,21 +350,59 @@
             </div>
         </div>
     </div>
-    <div class="extras">
-        <div><i class="fas fa-list-ul"></i></div>
-        <div><i class="fas fa-laptop"></i></div>
-        <div id="volume-icon"><i class="fas fa-volume-up"></i></div>
-        <div class="slidecontainer" style="width:30%;">
-            <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0;">
-        </div>
+
+
+        <div class="extras">
+<!--        <div><i class="fas fa-list-ul"></i></div>-->
+<!--        <div><i class="fas fa-laptop"></i></div>-->
+            <div id="volume-icon"><i class="fas fa-volume-up" style="padding-right: 10px" ></i></div>
+            <div class="slidecontainer" style="width:30%;">
+                <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0; padding-bottom: 4px;">
+            </div>
     </div>
 </footer>
 <audio id="audio-player" controls style="display:none;"></audio>
+
+<script>
+    // Function to create artist HTML element
+    function createArtistElement(artist) {
+        const artistDiv = document.createElement('div');
+        artistDiv.innerHTML = `
+                <a href="/detail/${artist.artistid}">
+            <div>
+                <img src="media/popular artists/${artist.artists_image}" alt="${artist.artists_name}">
+<!--                <div><i class="fas fa-play"></i></div>-->
+                <p>${artist.artists_name}</p>
+            </div>
+        </a>
+            `;
+        return artistDiv;
+    }
+
+    //Gọi api tất cả nghệ sĩ - JSON
+    // Fetch and display artists using Axios
+    axios.get('/api/artist/findAllArtist')
+        .then(response => {
+            const artistContainer = document.getElementById('artist-container');
+
+            const artists = response.data.data;
+
+            artists.forEach(artist => {
+                const artistElement = createArtistElement(artist);
+                artistContainer.appendChild(artistElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching artists:', error);
+            // Handle error (e.g., display a message to the user)
+        });
+</script>
 
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const songContainer = document.getElementById('song-container');
+        const artistContainer = document.getElementById('artist-container');
         const audioPlayer = document.getElementById('audio-player');
         const footerSongImage = document.getElementById('song-image').querySelector('img');
         const footerSongName = document.querySelector('.song-desc div:nth-child(1)');
@@ -809,7 +441,6 @@
         function getSongDetails(songId) {
             return axios.get(`/api-public/song/findSongId?songId=${songId}`);
         }
-
 
         // Function to render songs
         function renderSongs(songs) {
@@ -889,7 +520,14 @@
                                 // Update the audio source and play the song
                                 audioPlayer.src = songSrc;
                                 audioPlayer.play();
-
+                                let isThirtySecondsReached = false;
+                                audioPlayer.addEventListener('timeupdate', function() {
+                                    console.log("Thời gian hiện tại:", audioPlayer.currentTime);
+                                    if (!isThirtySecondsReached && audioPlayer.currentTime >= 29) {
+                                        isThirtySecondsReached = true;
+                                        updateListenCount(songId);
+                                    }
+                                });
 
                                 // Set the volume to maximum
                                 audioPlayer.volume = 1;
@@ -1349,7 +987,23 @@
         xhr.send();
     });
 </script>
-
+<script>
+    function updateListenCount(songId) {
+        console.log("Đã gọi hàm updateListenCount với songId:", songId);
+        axios.post('/update-listen-count', { songId: songId })
+            .then(function(response) {
+                if (response.data.status) {
+                    console.log("Cập nhật lượt nghe thành công!");
+                } else {
+                    console.error("Cập nhật lượt nghe thất bại!");
+                }
+            })
+            .catch(function(error) {
+                console.error("Có lỗi xảy ra khi cập nhật lượt nghe:", error);
+            });
+    }
+</script>
+<script src="JS/trending.js"></script>
 </body>
 
 </html>

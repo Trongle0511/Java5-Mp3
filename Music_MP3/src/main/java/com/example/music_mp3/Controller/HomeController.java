@@ -1,10 +1,12 @@
 package com.example.music_mp3.Controller;
 
+import com.example.music_mp3.Data.DTO.ArtistDTO;
 import com.example.music_mp3.Data.Entity.AccountsEntity;
-import com.example.music_mp3.Data.Entity.FavoritesEntity;
+import com.example.music_mp3.Data.Entity.ArtistsEntity;
 import com.example.music_mp3.Data.Entity.UserEntity;
 import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Repository.AccountRepository;
+import com.example.music_mp3.Repository.ArtistRepository;
 import com.example.music_mp3.Service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private ArtistService artistService;
+
 
     @Autowired
     private AccountService accountService;
@@ -306,6 +313,9 @@ public class HomeController {
     @GetMapping("/detail")
     public String detail() {
 
+    @GetMapping("/detail/{artistId}")
+    public String detail(@PathVariable int artistId) {
+        // Sử dụng giá trị artistId ở đây để thực hiện các xử lý tiếp theo
         return "Home/SinglePlaylistScreen";
     }
 

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -43,5 +44,6 @@ public class SongsEntity implements Serializable {
     @JsonIgnore
     private GenresEntity genre;
 
-
+    @OneToMany(mappedBy = "song")
+    private List<MonthlyTrendingEntity> monthlyTrending;
 }

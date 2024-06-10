@@ -31,7 +31,9 @@ CREATE TABLE Users (
 -- Bảng Nghệ sĩ (Artists)
 CREATE TABLE Artists (
     artistid INT IDENTITY(1,1) PRIMARY KEY,
-    artists_name NVARCHAR(100) NOT NULL
+    artists_name NVARCHAR(100) NOT NULL,
+	artists_image NVARCHAR(255),
+	artists_description NVARCHAR(MAX)
 );
 
 -- Bảng Album
@@ -90,16 +92,16 @@ CREATE TABLE PlaylistSongs (
     PRIMARY KEY (playlistid, songid)
 );
 
--- Bảng Favorites
-CREATE TABLE Favorites (
-favorite_id INT IDENTITY(1,1) PRIMARY KEY,
-user_id INT NOT NULL,
-song_id INT NOT NULL,
-created_at DATETIME DEFAULT GETDATE(),
-FOREIGN KEY (user_id) REFERENCES Account(user_id),
-FOREIGN KEY (song_id) REFERENCES Songs(song_id),
-UNIQUE (user_id, song_id) -- Mỗi người dùng chỉ có thể yêu thích mỗi bài hát một lần
-); 
+
+CREATE TABLE MonthlyTrending (
+    monthly_trendingid INT IDENTITY(1,1) PRIMARY KEY,
+    songid INT NOT NULL,
+    monthly_views INT NOT NULL,
+    FOREIGN KEY (songid) REFERENCES Songs(songid)
+);
+INSERT INTO MonthlyTrending (songid, monthly_views) VALUES 
+(1, 1000),
+(2, 2000);
 select * from Songs
 
 GO
@@ -123,3 +125,4 @@ BEGIN
     LEFT JOIN Account a ON i.user_id = a.user_id
     LEFT JOIN Users u ON a.user_id = u.account_id;
 END;
+

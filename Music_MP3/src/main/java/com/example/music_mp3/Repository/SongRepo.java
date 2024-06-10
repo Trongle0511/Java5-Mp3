@@ -12,4 +12,6 @@ public interface SongRepo extends JpaRepository<SongsEntity, Integer> {
     SongsEntity save(SongsEntity song);
     SongsEntity findById(int songID);
     List<SongsEntity> findAll();
+
+    List<SongsEntity> findByArtist_Artistid(int artistId);
 }
