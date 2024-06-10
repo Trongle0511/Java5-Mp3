@@ -46,17 +46,17 @@
         </div>
     </div>
     <!-- this is for search bar -->
-    <div class="search-bar">
-        <div>
-            <!-- magnifying glass- search icon -->
-            <i class="fas fa-search search-ico"></i>
-        </div>
-        <input type="text" name="search" placeholder="Search">
-        <div>
-            <!-- mic icon -->
-            <i class="fas fa-microphone mic-ico"></i>
-        </div>
-    </div>
+<!--    <div class="search-bar">-->
+<!--        <div>-->
+<!--            &lt;!&ndash; magnifying glass- search icon &ndash;&gt;-->
+<!--            <i class="fas fa-search search-ico"></i>-->
+<!--        </div>-->
+<!--        <input type="text" name="search" placeholder="Search">-->
+<!--        <div>-->
+<!--            &lt;!&ndash; mic icon &ndash;&gt;-->
+<!--            <i class="fas fa-microphone mic-ico"></i>-->
+<!--        </div>-->
+<!--    </div>-->
     <!-- this is for notification bell -->
 
     <!-- this is for profile picture -->
@@ -94,8 +94,9 @@
                 <br>
                 <div>
                     <span style="padding-right: 55px;">Name</span>
-                    <input name="name" th:value="${name}" style="border-radius: 5px; border: 1px solid #e5e6e8; width: 40%; height: 35px;" type="text">
+                    <input id="nameInput" name="name" th:value="${name}" style="border-radius: 5px; border: 1px solid #e5e6e8; width: 40%; height: 35px;" type="text">
                 </div>
+
                 <br>
                 <div>
                     <span style="padding-right: 60px;">Email</span>
@@ -104,11 +105,11 @@
                 <br>
                 <div>
                     <span style="padding-right: 52px;">Phone</span>
-                    <input name="phone" pattern="\d{10}" th:value="${phone}" style="border-radius: 5px; border: 1px solid #e5e6e8; width: 40%; height: 30px;" type="text">
+                    <input id="phoneInput" name="phone" th:value="${phone}" style="border-radius: 5px; border: 1px solid #e5e6e8; width: 40%; height: 30px;" type="text">
                 </div>
                 <br>
                 <div>
-                    <button style="margin-left: 50px; margin-top: 25px; width: 25%; height: 30px; border-radius: 5px; border: 1px solid #e5e6e8; cursor: pointer;">Submit</button>
+                    <button id="submitButton" style="margin-left: 50px; margin-top: 25px; width: 25%; height: 30px; border-radius: 5px; border: 1px solid #e5e6e8; cursor: pointer;">Submit</button>
                 </div>
             </form>
         </div>
@@ -393,6 +394,28 @@
 
 </script>
 
+<script>
+    document.getElementById('submitButton').addEventListener('click', function (e) {
+        var nameInput = document.getElementById('nameInput').value;
+        if (nameInput.trim() !== "") { // Kiểm tra input có dữ liệu không
+            if (/[^a-zA-Z\s]/.test(nameInput)) { // Kiểm tra nếu có ký tự không phải là chữ cái hoặc khoảng trắng
+                alert("Chỉ được nhập chữ và khoảng trắng");
+                e.preventDefault(); // Ngăn chặn hành động mặc định của nút "Submit"
+            }
+        }
+    });
+</script>
+<script>
+    document.getElementById('submitButton').addEventListener('click', function (e) {
+        var phoneInput = document.getElementById('phoneInput').value;
+        if (phoneInput.trim() !== "") { // Kiểm tra input có dữ liệu không
+            if (!/^\d{10}$/.test(phoneInput)) { // Kiểm tra nếu không phải là 10 số
+                alert("Chỉ được nhập 10 số và không được nhập chữ");
+                e.preventDefault(); // Ngăn chặn hành động mặc định của nút "Submit"
+            }
+        }
+    });
+</script>
 
 </body>
 
