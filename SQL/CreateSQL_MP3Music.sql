@@ -31,7 +31,9 @@ CREATE TABLE Users (
 -- Bảng Nghệ sĩ (Artists)
 CREATE TABLE Artists (
     artistid INT IDENTITY(1,1) PRIMARY KEY,
-    artists_name NVARCHAR(100) NOT NULL
+    artists_name NVARCHAR(100) NOT NULL,
+	artists_image NVARCHAR(255),
+	artists_description NVARCHAR(MAX)
 );
 
 -- Bảng Album

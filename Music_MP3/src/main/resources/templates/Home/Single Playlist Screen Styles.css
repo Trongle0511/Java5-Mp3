@@ -210,7 +210,7 @@ main {
 /* aside section 1 */
 /* jumbotron */
 .jumbotron {
-	height: 20vw;
+	height: 16vw;
 	width: 100%;
 	margin-top: 12px;
 	box-sizing: border-box;
@@ -224,14 +224,13 @@ main {
 }
 /* image insider jumbotron */
 .jumbotron-image {
-	height: 20vw;
+	height: 16vw;
 	width: 20vw;
-	background-image: linear-gradient(
+	background: linear-gradient(
 			to bottom,
 			transparent,
 			rgba(20, 27, 65, 1)
-		),
-		url("media/latest\ english/roar.jpg");
+		);
 	background-size: cover;
 }
 /* right part of the jumbotron */
@@ -266,8 +265,7 @@ main {
 	top: 5%;
 }
 /* self explanatory */
-.followers,
-.author {
+.followers{
 	font-size: 1.5vw;
 }
 /* description of the jumbotron */
@@ -297,9 +295,12 @@ main {
 	background-color: transparent;
 }
 /* particular item in the playlist */
+/*.playlist-items{*/
+/*	display: flex;*/
+/*}*/
 .playlist-item {
-	/* height:60px;
-    width:100%; */
+
+    width:100%;
 	height: 8vh;
 
 	box-sizing: border-box;
@@ -338,7 +339,7 @@ main {
 .right {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: right;
 	align-items: center;
 	width: 50px;
 	height: 100%;
@@ -619,6 +620,6 @@ footer {
 	width: 20%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: right;
 	align-items: center;
 }

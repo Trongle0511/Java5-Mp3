@@ -45,7 +45,7 @@
 </style>
 <body>
 <!-- top navigation bar -->
-<nav class="navigation-bar">
+<nav class="navigation-bar" style="padding-top: 20px">
     <!-- this div contains the logo and title os the page -->
     <div class="title-combo">
         <div class="website-logo">
@@ -115,107 +115,9 @@
                 Popular Artists
             </h1>
             <!-- this contains the content of the popular artists section -->
-            <div class="popular-artist-content">
-                <!-- if user clicks on any one artist, it will redirect the user to the second page -->
-                <!-- following is the list of artists -->
-                <!-- first artist -->
-                <a href="/detail">
-                    <div>
-                        <img src="media/popular artists/adele.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Adele
-                        </p>
-                    </div>
-                </a>
-                <!-- second artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/billie eilish.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Billie Eilish
-                        </p>
-                    </div>
-                </a>
-                <!-- third artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/bruno mars.jpg" width="15vw" height="10vw">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Bruno Mars
-                        </p>
-                    </div>
-                </a>
-                <!-- fourth artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/Camila Cabello.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Camila Cabello
-                        </p>
-                    </div>
-                </a>
-                <!-- fifth artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/drake.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Drake
-                        </p>
-                    </div>
-                </a>
-                <!-- 6th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/ed sheeran.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Ed Sheeran
-                        </p>
-                    </div>
-                </a><!-- 7th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/eminem.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Eminem
-                        </p>
-                    </div>
-                </a><!-- 8th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/Katy perry.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Katy Perry
-                        </p>
-                    </div>
-                </a>
-                <!-- 9th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/rudy mancuso.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Rudy Mancuso
-                        </p>
-                    </div>
-                </a>
-                <!-- 10th artist -->
-                <a href="SinglePlaylistScreen.html">
-                    <div>
-                        <img src="media/popular artists/snoop dogg.jpg">
-                        <div><i class="fas fa-play"></i></div>
-                        <p>
-                            Snoop Dogg
-                        </p>
-                    </div>
-                </a>
+            <div class="popular-artist-content" id="artist-container">
+                <!-- Artists will be dynamically inserted here -->
+
             </div>
         </div>
         <!-- this is the music themes part, the one with the tri-gradient background -->
@@ -747,21 +649,59 @@
             </div>
         </div>
     </div>
-    <div class="extras">
-        <div><i class="fas fa-list-ul"></i></div>
-        <div><i class="fas fa-laptop"></i></div>
-        <div id="volume-icon"><i class="fas fa-volume-up"></i></div>
-        <div class="slidecontainer" style="width:30%;">
-            <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0;">
-        </div>
+
+
+        <div class="extras">
+<!--        <div><i class="fas fa-list-ul"></i></div>-->
+<!--        <div><i class="fas fa-laptop"></i></div>-->
+            <div id="volume-icon"><i class="fas fa-volume-up" style="padding-right: 10px" ></i></div>
+            <div class="slidecontainer" style="width:30%;">
+                <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0; padding-bottom: 4px;">
+            </div>
     </div>
 </footer>
 <audio id="audio-player" controls style="display:none;"></audio>
+
+<script>
+    // Function to create artist HTML element
+    function createArtistElement(artist) {
+        const artistDiv = document.createElement('div');
+        artistDiv.innerHTML = `
+                <a href="/detail/${artist.artistid}">
+            <div>
+                <img src="media/popular artists/${artist.artists_image}" alt="${artist.artists_name}">
+<!--                <div><i class="fas fa-play"></i></div>-->
+                <p>${artist.artists_name}</p>
+            </div>
+        </a>
+            `;
+        return artistDiv;
+    }
+
+    //Gọi api tất cả nghệ sĩ - JSON
+    // Fetch and display artists using Axios
+    axios.get('/api/artist/findAllArtist')
+        .then(response => {
+            const artistContainer = document.getElementById('artist-container');
+
+            const artists = response.data.data;
+
+            artists.forEach(artist => {
+                const artistElement = createArtistElement(artist);
+                artistContainer.appendChild(artistElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching artists:', error);
+            // Handle error (e.g., display a message to the user)
+        });
+</script>
 
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const songContainer = document.getElementById('song-container');
+        const artistContainer = document.getElementById('artist-container');
         const audioPlayer = document.getElementById('audio-player');
         const footerSongImage = document.getElementById('song-image').querySelector('img');
         const footerSongName = document.querySelector('.song-desc div:nth-child(1)');
@@ -797,7 +737,6 @@
         function getSongDetails(songId) {
             return axios.get(`/api-public/song/findSongId?songId=${songId}`);
         }
-
 
         // Function to render songs
         function renderSongs(songs) {

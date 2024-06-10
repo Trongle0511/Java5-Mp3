@@ -14,4 +14,6 @@ public interface SongService{
     List<SongDTO> findAll();
     SongsEntity saveSongAndArtist(SongAndArtistInsertDto songAndArtistInsertDto);
     List<SongInsertM> findAllSongInsertM();
+
+    List<SongDTO> findSongsByArtistId(int artistId);
 }
