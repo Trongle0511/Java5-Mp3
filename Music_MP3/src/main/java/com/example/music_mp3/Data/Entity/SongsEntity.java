@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +17,8 @@ import java.io.Serializable;
 public class SongsEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SongID;
+    @Column(name = "song_id")
+    private int id;
 
     @Column(name = "song_name")
     private String song_name;
@@ -40,4 +42,6 @@ public class SongsEntity implements Serializable {
     @JoinColumn(name = "genreid")
     @JsonIgnore
     private GenresEntity genre;
+
+
 }

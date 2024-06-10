@@ -1,17 +1,15 @@
 package com.example.music_mp3.Controller;
 
 import com.example.music_mp3.Data.Entity.AccountsEntity;
+import com.example.music_mp3.Data.Entity.FavoritesEntity;
 import com.example.music_mp3.Data.Entity.UserEntity;
 import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Repository.AccountRepository;
-import com.example.music_mp3.Service.AccountService;
-import com.example.music_mp3.Service.ProfileService;
-import com.example.music_mp3.Service.UserService;
+import com.example.music_mp3.Service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
-import com.example.music_mp3.Service.MailerService;
 import com.example.music_mp3.utils.PasswordEncoderUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -47,18 +44,28 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private HttpSession session;
-
-    @Autowired
-    private AccountService accountService;
 
     @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
     private MailerService mailer;  // Inject the MailerService
+
+    @Autowired
+    private FavoritesService favoritesService;
+
+
+//    @GetMapping("/favorites")
+//    public String favorites(Model model) {
+//        // Lấy danh sách các bài hát yêu thích từ dịch vụ
+//        List<FavoritesEntity> favoritesList = favoritesService.getAllFavorites();
+//        // Thêm danh sách các bài hát yêu thích vào model
+//        model.addAttribute("favoritesList", favoritesList);
+//        // Trả về tên của trang HTML mà bạn muốn hiển thị
+//        return "Home/Favorites";
+//    }
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -103,8 +110,9 @@ public class HomeController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email không tồn tại");
         }
         if (authService.authenticateUser(email, password)) {
-            StaticVariable.sessionEmail = email;
             session.setAttribute("email", email);
+            StaticVariable.sessionEmail = email;
+
             System.out.println(email);
             if (authService.isAdmin(email)) {
                 // Đăng nhập thành công cho vai trò admin
@@ -118,6 +126,7 @@ public class HomeController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" Mật khẩu không chính xác!");
         }
     }
+
     //VanHiep Begin
     @GetMapping("/register")
     public String register() {
@@ -202,12 +211,12 @@ public class HomeController {
     }
 
 
-
     //VanHiep - TuongVi End
     @GetMapping("/forgot-password")
     public String forgotpassword() {
         return "Admin/auth/check-email";
     }
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam("email") String email,
                                         Model model, HttpSession session) {
@@ -293,9 +302,16 @@ public class HomeController {
     public String reset() {
         return "Admin/auth/reset-password";
     }
+
     @GetMapping("/detail")
     public String detail() {
 
         return "Home/SinglePlaylistScreen";
+    }
+
+    @GetMapping("/Song-favorites")
+    public String songFavorites() {
+
+        return "Home/Favorites";
     }
 }

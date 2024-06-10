@@ -50,7 +50,7 @@ CREATE TABLE Genres (
 
 -- Bảng Bài hát (Songs)
 CREATE TABLE Songs (
-    songid INT IDENTITY(1,1) PRIMARY KEY,
+    song_id INT IDENTITY(1,1) PRIMARY KEY,
     song_name NVARCHAR(100) NOT NULL,
     Image NVARCHAR(255) NOT NULL,
     audio_file NVARCHAR(255) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE SongRatings (
     songid INT,
     Views INT NOT NULL,
     user_id INT,
-    FOREIGN KEY (songid) REFERENCES Songs(songid),
+    FOREIGN KEY (songid) REFERENCES Songs(song_id),
     FOREIGN KEY (user_id) REFERENCES Account(user_id),
     PRIMARY KEY (songid, user_id)
 );
@@ -86,9 +86,20 @@ CREATE TABLE PlaylistSongs (
     playlistid INT,
     songid INT,
     FOREIGN KEY (playlistid) REFERENCES Playlist(playlistid),
-    FOREIGN KEY (songid) REFERENCES Songs(songid),
+    FOREIGN KEY (songid) REFERENCES Songs(song_id),
     PRIMARY KEY (playlistid, songid)
 );
+
+-- Bảng Favorites
+CREATE TABLE Favorites (
+favorite_id INT IDENTITY(1,1) PRIMARY KEY,
+user_id INT NOT NULL,
+song_id INT NOT NULL,
+created_at DATETIME DEFAULT GETDATE(),
+FOREIGN KEY (user_id) REFERENCES Account(user_id),
+FOREIGN KEY (song_id) REFERENCES Songs(song_id),
+UNIQUE (user_id, song_id) -- Mỗi người dùng chỉ có thể yêu thích mỗi bài hát một lần
+); 
 select * from Songs
 
 GO
