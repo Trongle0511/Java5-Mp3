@@ -1,17 +1,17 @@
 package com.example.music_mp3.Controller;
 
+import com.example.music_mp3.Data.DTO.ArtistDTO;
 import com.example.music_mp3.Data.Entity.AccountsEntity;
+import com.example.music_mp3.Data.Entity.ArtistsEntity;
 import com.example.music_mp3.Data.Entity.UserEntity;
 import com.example.music_mp3.Data.Variable.StaticVariable;
 import com.example.music_mp3.Repository.AccountRepository;
-import com.example.music_mp3.Service.AccountService;
-import com.example.music_mp3.Service.ProfileService;
-import com.example.music_mp3.Service.UserService;
+import com.example.music_mp3.Repository.ArtistRepository;
+import com.example.music_mp3.Service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.javamail.JavaMailSender;
-import com.example.music_mp3.Service.MailerService;
 import com.example.music_mp3.utils.PasswordEncoderUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import java.net.URI;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private ArtistService artistService;
+
 
     @Autowired
     private AccountService accountService;
@@ -289,9 +292,12 @@ public class HomeController {
     public String reset() {
         return "Admin/auth/reset-password";
     }
-    @GetMapping("/detail")
-    public String detail() {
 
+    @GetMapping("/detail/{artistId}")
+    public String detail(@PathVariable int artistId) {
+        // Sử dụng giá trị artistId ở đây để thực hiện các xử lý tiếp theo
         return "Home/SinglePlaylistScreen";
     }
+
+
 }

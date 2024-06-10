@@ -52,10 +52,7 @@ public class AccountAPI {
             result.put("success", true);
             result.put("message", "Call api thành công");
             result.put("data", accountEntity);
-            if (Objects.isNull(accountEntity)) {
-                result.put("success", true);
-                result.put("message", "Account không tồn tại");
-            }
+
         } catch (Exception e) {
             log.error("Call api thất bại: /register ", e);
             result.put("success", false);
