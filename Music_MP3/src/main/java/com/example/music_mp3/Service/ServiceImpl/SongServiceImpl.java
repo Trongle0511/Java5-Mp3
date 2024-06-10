@@ -84,7 +84,7 @@ public class SongServiceImpl implements SongService {
 
     private SongDTO convertToDTO(SongsEntity song) {
         return new SongDTO(
-                song.getSongID(),
+                song.getId(),
                 song.getSong_name(),
                 song.getImage(),
                 song.getAudio_file()

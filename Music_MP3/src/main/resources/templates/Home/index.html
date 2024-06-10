@@ -40,6 +40,15 @@
         /* CSS hover của cả hai nút */
         background-color: #0056b3;
     }
+    .add-to-favorites {
+        background-color: red; /* Thay đổi màu nút khi được thêm vào Favorites */
+        color: white; /* Màu chữ */
+        /* Thêm các thuộc tính CSS khác tùy thuộc vào thiết kế của bạn */
+    }
+
+
+
+
 
     .artist-name,
     .song-views {
@@ -299,7 +308,7 @@
             <hr>
             <p><a href style="color:#007bff; font-weight:bolder;">Favourite songs</a></p>
             <hr>
-            <p><a href="#" style="color:red; font-weight:bolder;">Close</a></p>
+            <p><a href="#" style="color:#f80808; font-weight:bolder;">Close</a></p>
         </div>
 
         <div class="playlist-content">
@@ -409,6 +418,9 @@
         const volumeIcon = document.getElementById('volume-icon');
         const randomButton = document.getElementById('random-button');
         const searchInput = document.getElementById('search-input');
+        const heartIcons = document.querySelectorAll('.drop-item .fa-heart');
+
+
 
         let currentSong = null;
 
@@ -433,49 +445,54 @@
         // Function to render songs
         function renderSongs(songs) {
             songContainer.innerHTML = '';
+            let dropdownCount = 0; // Biến đếm để tạo ID duy nhất cho nút Add to Favorites
             songs.forEach(song => {
+                const dropdownId = `latest-release-checkbox-${song.songID}`; // ID duy nhất cho mỗi dropdown
                 const songCard = `
-            <div class="card" id="playSong" data-song-name="${song.song_name}">
-                <div>
-                    <img src="library/image/${song.image}">
-                    <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
-                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}"
-                         style="display: flex; justify-content: center; align-items: center; width: 100px; height: 100px;">
-                        <i class="fas fa-play" style="width:50%; height:50%;"></i>
-                    </div>
+    <div class="card" id="playSong" data-song-name="${song.song_name}">
+        <div>
+            <img src="library/image/${song.image}">
+            <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
+                 data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}"
+                 style="display: flex; justify-content: center; align-items: center; width: 100px; height: 100px;">
+                <i class="fas fa-play" style="width:50%; height:50%;"></i>
+            </div>
+        </div>
+        <div class="song-description">
+            <h3>${song.song_name}</h3>
+            <p>Aug 20, 2020</p>
+        </div>
+        <div class="options">
+            <label for="${dropdownId}"><i class="fas fa-ellipsis-h"></i></label>
+            <input type="checkbox" id="${dropdownId}">
+            <div class="latest-release-dropdown">
+                <div class="drop-item">
+                    <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play Now</a></p>
                 </div>
-                <div class="song-description">
-                    <h3>${song.song_name}</h3>
-                    <p>Aug 20, 2020</p>
+                <hr>
+                <button class="drop-item add-to-favorites" id="add-to-favorites_${song.songID}" data-song-id="${song.songID}">
+                    <p><i class="fas fa-heart"></i> Add to Favorites</p>
+                </button>
+                <hr>
+                <div class="drop-item">
+                    <p><i class="fas fa-music"></i> Add to playlist</p>
                 </div>
-                <div class="options">
-                    <label for="latest-release-checkbox"><i class="fas fa-ellipsis-h"></i></label>
-                    <input type="checkbox" id="latest-release-checkbox">
-                    <div class="latest-release-dropdown">
-                        <div class="drop-item">
-                            <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play Now</a></p>
-                        </div>
-                        <hr>
-                        <div class="drop-item">
-                            <p><i class="fas fa-list-ul"></i> Add to Queue</p>
-                        </div>
-                        <hr>
-                        <div class="drop-item">
-                            <p><i class="fas fa-music"></i> Add to playlist</p>
-                        </div>
-                        <hr>
-                        <div class="drop-item">
-                            <p><i class="fas fa-info-circle"></i> Get Info</p>
-                        </div>
-                    </div>
-<!--                    <p>4:44</p>-->
+                <hr>
+                <div class="drop-item">
+                    <p><i class="fas fa-info-circle"></i> Get Info</p>
                 </div>
             </div>
-        `;
-
+            <p>4:44</p>
+        </div>
+    </div>
+    `;
 
                 songContainer.innerHTML += songCard;
             });
+
+
+
+
 
             // Add event listeners to play buttons
             const playButtons = document.querySelectorAll('.play-button');
@@ -537,7 +554,94 @@
                         });
                 });
             });
+
+
+            // Gắn sự kiện click cho button "Add to Favorites" sau khi render các bài hát
+            document.querySelectorAll('.add-to-favorites').forEach(button => {
+                button.addEventListener('click', function() {
+                    const songId = this.getAttribute('data-song-id');
+                    console.log(songId);
+                    var currentDate = new Date();
+                    // Create the payload for the API request
+                    const payload = {
+                        songsEntity: {
+                            id: songId
+                        },
+                        createdAt: currentDate
+                    };
+
+                    // Send the POST request using Axios
+                    axios.post('/createComment', payload)
+                        .then(response => {
+                            if (response.data === 1) {
+                                alert('Song added to favorites successfully!');
+                            } else {
+                                alert('Failed to add song to favorites.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('There was an error adding the song to favorites:', error);
+                        });
+                });
+            });
         }
+
+// Attach event listeners to the "Add to Favorites" buttons
+
+
+
+        // // Function to get the current user's ID from the session
+        // function getCurrentUserId() {
+        //     // Retrieve the user ID from the session storage
+        //     return sessionStorage.getItem('userId');
+        // }
+        // // Function to add event listeners to "Add to Favorites" buttons
+        // function addFavoritesEventListeners() {
+        //     const addToFavoritesButtons = document.querySelectorAll('.add-to-favorites');
+        //     addToFavoritesButtons.forEach(button => {
+        //         button.addEventListener('click', addToFavorites);
+        //     });
+        // }
+        //
+        // function addToFavorites(event) {
+        //     const button = event.currentTarget;
+        //     const buttonId = button.getAttribute('id');
+        //     const currentUserId = getCurrentUserId(); // Hàm để lấy userId của người dùng hiện tại từ session
+        //
+        //     if (buttonId) {
+        //         const parts = buttonId.split('_');
+        //         if (parts.length === 2) {
+        //             const songId = parts[1];
+        //             // Dữ liệu để gửi đến API
+        //             const requestData = {
+        //                 songId: parseInt(songId)
+        //             };
+        //
+        //
+        //             // Gọi API sử dụng Axios và gửi dữ liệu dưới dạng JSON
+        //             axios.post('/favorites/api/add', requestData)
+        //                 .then(response => {
+        //                     if (response.data.success) {
+        //                         button.classList.add('added-to-favorites');
+        //                         console.log('Added to favorites successfully!');
+        //                     } else {
+        //                         console.error('Failed to add to favorites:', response.data.message);
+        //                     }
+        //                 })
+        //                 .catch(error => console.error('Error adding to favorites:', error.response.data.message));
+        //         } else {
+        //             console.error('Invalid button ID:', buttonId);
+        //         }
+        //     } else {
+        //         console.error('Button has no ID attribute:', button);
+        //     }
+        //
+        // }
+
+
+
+
+
 
         // tìm kiếm
         searchInput.addEventListener('input', function () {
@@ -569,21 +673,6 @@
             songContainer.innerHTML = '<p>(Không có bài hát phừ hợp với tìm kiếm)</p>';
         }
 
-        // Initial call to get all songs
-        // getAllSongs()
-        //     .then(function (response) {
-        //         if (response.status === 200 && response.data.status === 'success') {
-        //             const songs = response.data.data;
-        //             console.log('All Songs:', songs);
-        //             renderSongs(songs);
-        //             playButtons = document.querySelectorAll('.play-button'); // Gán giá trị cho biến playButtons
-        //         } else {
-        //             alert(response.data.message || 'No songs found');
-        //         }
-        //     })
-        //     .catch(function (error) {
-        //         console.error('Error fetching songs:', error);
-        //     });
         getAllSongs()
             .then(function (response) {
                 if (response.status === 200 && response.data.status === 'success') {
@@ -647,27 +736,6 @@
         audioPlayer.volume = 1;
         volumeRange.value = 100;
 
-        // // Next button functionality
-        // nextButton.addEventListener('click', function () {
-        //     const currentButton = document.querySelector('.current-song');
-        //     const playButtons = document.querySelectorAll('.play-button');
-        //     const currentIndex = Array.from(playButtons).indexOf(currentButton);
-        //     let nextIndex;
-        //
-        //     // if (currentIndex === playButtons.length - 1) {
-        //     //     nextIndex = 0; // Quay lại bài hát đầu nếu đang ở cuối danh sách
-        //     // } else {
-        //     //     nextIndex = currentIndex + 1;
-        //     // }
-        //     if (currentIndex === 4) {
-        //         nextIndex = 0; // Quay lại bài hát đầu nếu đang ở bài hát số 4
-        //     } else {
-        //         nextIndex = currentIndex + 1;
-        //     }
-        //
-        //     const nextButton = playButtons[nextIndex];
-        //     loadAndPlaySong(nextButton);
-        // });
 
         // xử lí nút next
         nextButton.addEventListener('click', function () {
@@ -692,28 +760,6 @@
                 loadAndPlaySong(nextButton);
             }
         });
-
-        // // Previous button functionality
-        // prevButton.addEventListener('click', function () {
-        //     const currentButton = document.querySelector('.current-song');
-        //     const playButtons = document.querySelectorAll('.play-button');
-        //     const currentIndex = Array.from(playButtons).indexOf(currentButton);
-        //     let prevIndex;
-        //
-        //     // if (currentIndex === 0) {
-        //     //     prevIndex = playButtons.length - 1; // Quay lại bài hát cuối nếu đang ở đầu danh sách
-        //     // } else {
-        //     //     prevIndex = currentIndex - 1;
-        //     // }
-        //     if (currentIndex === 0) {
-        //         prevIndex = 4; // Quay lại bài hát số 4 nếu đang ở bài hát đầu
-        //     } else {
-        //         prevIndex = currentIndex - 1;
-        //     }
-        //
-        //     const prevButton = playButtons[prevIndex];
-        //     loadAndPlaySong(prevButton);
-        // });
 
 
         // xử lí nút prev
@@ -745,51 +791,6 @@
         resetButton.addEventListener('click', function () {
             audioPlayer.currentTime = 0;
         });
-
-        // // Function to load and play a song
-        // function loadAndPlaySong(button) {
-        //     const songId = button.getAttribute('data-song-id');
-        //     const songSrc = button.getAttribute('data-song-src');
-        //     const songImage = button.getAttribute('data-song-image');
-        //     const songName = button.getAttribute('data-song-name');
-        //     const songAuthor = button.getAttribute('data-song-author');
-        //     playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
-        //
-        //     // Update footer with song details
-        //     footerSongImage.src = songImage;
-        //     footerSongName.textContent = songName;
-        //     footerSongAuthor.textContent = songAuthor;
-        //
-        //     // Update the audio source and play the song
-        //     audioPlayer.src = songSrc;
-        //     audioPlayer.play();
-        //
-        //     // Set the volume to maximum
-        //     audioPlayer.volume = 1;
-        //     volumeRange.value = 100;
-        //
-        //     // Update the play/pause button
-        //     playPauseButton.classList.remove('fa-play-circle');
-        //     playPauseButton.classList.add('fa-pause-circle');
-        //
-        //     // Set the current song
-        //     currentSong = {
-        //         songId,
-        //         songSrc,
-        //         songImage,
-        //         songName,
-        //         songAuthor
-        //     };
-        //     console.log(songSrc)
-        //     // Remove 'current-song' class from current button
-        //     const currentButton = document.querySelector('.current-song');
-        //     if (currentButton) {
-        //         currentButton.classList.remove('current-song');
-        //     }
-        //
-        //     // Add 'current-song' class to the new button
-        //     button.classList.add('current-song');
-        // }
 
 
         // Hàm load và phát bài hát
@@ -851,6 +852,7 @@
                 volumeRange.value = 100;
             }
         });
+
     });
 
 
@@ -959,6 +961,13 @@
         });
     }
 
+
+
+
+
+
+</script>
+<script>
 
 </script>
 <script>

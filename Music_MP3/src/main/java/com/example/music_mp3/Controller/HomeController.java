@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -58,6 +59,20 @@ public class HomeController {
 
     @Autowired
     private MailerService mailer;  // Inject the MailerService
+
+    @Autowired
+    private FavoritesService favoritesService;
+
+
+//    @GetMapping("/favorites")
+//    public String favorites(Model model) {
+//        // Lấy danh sách các bài hát yêu thích từ dịch vụ
+//        List<FavoritesEntity> favoritesList = favoritesService.getAllFavorites();
+//        // Thêm danh sách các bài hát yêu thích vào model
+//        model.addAttribute("favoritesList", favoritesList);
+//        // Trả về tên của trang HTML mà bạn muốn hiển thị
+//        return "Home/Favorites";
+//    }
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -102,8 +117,9 @@ public class HomeController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email không tồn tại");
         }
         if (authService.authenticateUser(email, password)) {
-            StaticVariable.sessionEmail = email;
             session.setAttribute("email", email);
+            StaticVariable.sessionEmail = email;
+
             System.out.println(email);
             if (authService.isAdmin(email)) {
                 // Đăng nhập thành công cho vai trò admin
@@ -117,6 +133,7 @@ public class HomeController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" Mật khẩu không chính xác!");
         }
     }
+
     //VanHiep Begin
     @GetMapping("/register")
     public String register() {
@@ -201,12 +218,12 @@ public class HomeController {
     }
 
 
-
     //VanHiep - TuongVi End
     @GetMapping("/forgot-password")
     public String forgotpassword() {
         return "Admin/auth/check-email";
     }
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam("email") String email,
                                         Model model, HttpSession session) {
@@ -293,11 +310,18 @@ public class HomeController {
         return "Admin/auth/reset-password";
     }
 
+    @GetMapping("/detail")
+    public String detail() {
+
     @GetMapping("/detail/{artistId}")
     public String detail(@PathVariable int artistId) {
         // Sử dụng giá trị artistId ở đây để thực hiện các xử lý tiếp theo
         return "Home/SinglePlaylistScreen";
     }
 
+    @GetMapping("/Song-favorites")
+    public String songFavorites() {
 
+        return "Home/Favorites";
+    }
 }

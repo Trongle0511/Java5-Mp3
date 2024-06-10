@@ -18,7 +18,7 @@ public class SongM {
 
     public static SongM convertSongsEntityToSongM(SongsEntity songE){
         return SongM.builder()
-                .SongID(songE.getSongID())
+                .SongID(songE.getId())
                 .song_name(songE.getSong_name())
                 .Image(songE.getImage())
                 .audio_file(songE.getAudio_file())
