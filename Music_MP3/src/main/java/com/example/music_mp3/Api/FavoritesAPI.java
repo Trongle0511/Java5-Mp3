@@ -30,13 +30,13 @@ public class FavoritesAPI {
     @Autowired
     private FavoritesService favoritesService;
 
-    @PostMapping("/createComment")
+    @PostMapping("/addFavorites")
     public ResponseEntity<?> doPostCreateComment(@RequestBody FavoitesDto favoitesDto) {
         byte rowEffected;
         try {
             rowEffected = favoritesService.createFavorites(favoitesDto);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /createComment");
+            System.out.println("Call API Failed: /addFavorites");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
