@@ -571,7 +571,7 @@
                     };
 
                     // Send the POST request using Axios
-                    axios.post('/createComment', payload)
+                    axios.post('/addFavorites', payload)
                         .then(response => {
                             if (response.data === 1) {
                                 alert('Song added to favorites successfully!');

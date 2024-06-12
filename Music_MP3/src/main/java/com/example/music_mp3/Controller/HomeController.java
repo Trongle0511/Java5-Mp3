@@ -123,6 +123,7 @@ public class HomeController {
             System.out.println(email);
             if (authService.isAdmin(email)) {
                 // Đăng nhập thành công cho vai trò admin
+                session.removeAttribute("email");
                 return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/admin")).build();
             } else {
                 // Đăng nhập thành công cho vai trò user
@@ -310,9 +311,10 @@ public class HomeController {
         return "Admin/auth/reset-password";
     }
 
-    @GetMapping("/detail")
-    public String detail() {
-
+//    @GetMapping("/detail")
+//    public String detail() {
+//
+//    }
     @GetMapping("/detail/{artistId}")
     public String detail(@PathVariable int artistId) {
         // Sử dụng giá trị artistId ở đây để thực hiện các xử lý tiếp theo
