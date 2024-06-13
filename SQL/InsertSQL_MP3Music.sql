@@ -120,3 +120,10 @@ INSERT INTO MonthlyTrending (songid, monthly_views) VALUES
 (29, 0),
 (30, 0);
 GO
+INSERT INTO Genres (genres_name)
+VALUES 
+('Nhạc trẻ'),
+('Pop'),
+('Hip-Hop/Rap'),
+('K-Pop'),
+('EDM');

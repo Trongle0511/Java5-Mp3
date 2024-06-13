@@ -1100,7 +1100,7 @@
               <div class="insertSong">
                 <button class="open_modal_insertSong"><i class="fa fa-plus"></i></button>
                 <div class="modal" style="display: none; position: fixed; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
-                  <div class="modal_inner" style="background-color: #fff; border-radius: 10px; width: 400px; height: 550px; padding: 20px; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
+                  <div class="modal_inner" style="background-color: #fff; border-radius: 10px; width: 400px; height: 550px; padding: 10px; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
                     <div class="modal_header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">
                       <h2>Thêm Bài Hát và Nghệ Sĩ</h2>
                       <span class="modal_close" style="font-size: 1.5em; cursor: pointer;">&times;</span>
@@ -1108,23 +1108,33 @@
                     <form id="songArtistForm" style="display: flex; flex-direction: column;">
                       <div class="modal_body" style="margin-bottom: 20px;">
                         <!-- Save -->
-                        <div class="form_group" style="margin-bottom: 15px;">
+                        <div class="form_group" style="margin-bottom: 2px;">
                           <label for="song_name" style="display: block; margin-bottom: 5px; font-weight: bold;">Tên Bài Hát</label>
                           <input type="text" id="song_name" name="song_name" required style="width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px;">
                         </div>
-                        <div class="form_group" style="margin-bottom: 15px;">
+                        <div class="form_group" style="margin-bottom: 2px;">
                           <label for="image" style="display: block; margin-bottom: 5px; font-weight: bold;">Hình Ảnh</label>
                           <input type="file" id="image" name="image"  accept="image/*"  required style="width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px;">
                         </div>
-                        <div class="form_group" style="margin-bottom: 15px;">
+                        <div class="form_group" style="margin-bottom: 2px;">
                           <label for="audio_file" style="display: block; margin-bottom: 5px; font-weight: bold;">Âm Thanh</label>
                           <input type="file" id="audio_file" name="audio_file" accept="audio/*" required style="width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px;">
                         </div>
-                        <div class="form_group" style="margin-bottom: 15px;">
+                        <div class="form_group" style="margin-bottom: 2px;">
                           <label for="artist_name" style="display: block; margin-bottom: 5px; font-weight: bold;">Tên Nghệ Sĩ</label>
                           <input type="text" id="artist_name" name="artist_name" required style="width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px;">
                         </div>
                         <div class="form_group" style="margin-bottom: 15px;">
+                          <label for="genre" style="display: block; margin-bottom: 5px; font-weight: bold;">Thể Loại Nhạc</label>
+                          <select id="genre" name="genre" required style="width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ddd; border-radius: 5px;">
+                            <option value="1">Nhạc trẻ</option>
+                            <option value="2">Pop</option>
+                            <option value="3">Hip-Hop/Rap</option>
+                            <option value="4">K-Pop</option>
+                            <option value="5">EDM</option>
+                          </select>
+                        </div>
+                        <div class="form_group" style="margin-bottom: 2px; text-align: right;">
                           <button type="button" class="close" style="padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #dc3545; color: #fff;">Close</button>
                           <button type="submit" class="submit" style="padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #28a745; color: #fff; margin-left: 10px;">Submit</button>
                         </div>
@@ -1622,6 +1632,7 @@
       formData.append('image', document.getElementById('image').files[0]);
       formData.append('audio_file', document.getElementById('audio_file').files[0]);
       formData.append('artist_name', document.getElementById('artist_name').value);
+      formData.append('genre', document.getElementById('genre').value);
 
       try {
         const response = await axios.post('/api-public/song/addSongAndArtist', formData, {

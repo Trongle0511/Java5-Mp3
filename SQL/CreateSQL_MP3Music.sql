@@ -136,4 +136,15 @@ BEGIN
     LEFT JOIN Account a ON i.user_id = a.user_id
     LEFT JOIN Users u ON a.user_id = u.account_id;
 END;
-
+-- Tạo trigger để thêm bản ghi vào bảng MonthlyTrending khi có bài hát mới được thêm vào bảng Songs
+CREATE TRIGGER trg_AfterInsert_Songs
+ON Songs
+AFTER INSERT
+AS
+BEGIN
+    -- Thêm bản ghi vào bảng MonthlyTrending với songid từ bảng Songs mới được thêm vào và set monthly_views = 0
+    INSERT INTO MonthlyTrending (songid, monthly_views)
+    SELECT song_id, 0
+    FROM inserted;
+END;
+GO
