@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -37,7 +38,9 @@ public class AccountsEntity{
     @JsonBackReference
     private UserEntity user;
 
-
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<FavoritesEntity> favoritesEntities;
 
 
 }

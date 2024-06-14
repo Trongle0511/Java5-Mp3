@@ -311,19 +311,19 @@ public class HomeController {
         return "Admin/auth/reset-password";
     }
 
-//    @GetMapping("/detail")
-//    public String detail() {
-//
-//    }
+    @GetMapping("/detail")
+    public String detail() {
+        return "Home/SinglePlaylistScreen";
+    }
+
     @GetMapping("/detail/{artistId}")
     public String detail(@PathVariable int artistId) {
         // Sử dụng giá trị artistId ở đây để thực hiện các xử lý tiếp theo
         return "Home/SinglePlaylistScreen";
     }
 
-    @GetMapping("/Song-favorites")
+    @GetMapping("/song-favorites")
     public String songFavorites() {
-
         return "Home/Favorites";
     }
 }

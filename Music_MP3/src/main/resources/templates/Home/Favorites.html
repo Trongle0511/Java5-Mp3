@@ -7,13 +7,34 @@
     <title>Scooped- Playlist</title>
     <!-- it is connected to two stylesheets -->
     <link rel="stylesheet" type="text/css" href="Single Playlist Screen Styles.css"><!-- this is the main stylesheet -->
+<!--    <link rel="stylesheet" type="text/css" href="Stylesheet_main.css">&lt;!&ndash; this is the main stylesheet &ndash;&gt;-->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+
     <!-- desktop first approach is used for the same. -->
     <link rel="stylesheet" type="text/css" href="Secondary page responsive.css">
     <!-- this is the style sheet with all the media queries -->
     <!-- this script is just for font awesome fonts -->
     <script src="https://kit.fontawesome.com/2d9b67a497.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    button#sort-asc,
+    button#sort-desc {
+        /* CSS của cả hai nút */
+        padding: 10px;
+        margin: 5px;
+        border: none;
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+    }
 
+    button#sort-asc:hover,
+    button#sort-desc:hover {
+        /* CSS hover của cả hai nút */
+        background-color: #0056b3;
+    }
+</style>
 </head>
 <!-- body -->
 
@@ -43,26 +64,6 @@
             Favourites
         </h4>
     </div>
-    <div class="search-bar">
-        <div>
-            <!-- magnifying glass- search icon -->
-            <i class="fas fa-search search-ico"></i>
-        </div>
-        <input type="text" name="search" placeholder="Search">
-        <div>
-            <!-- mic icon -->
-            <i class="fas fa-microphone mic-ico"></i>
-        </div>
-    </div>
-    <!-- this is for notification bell -->
-    <div class="notification-bell">
-        <img src="media/bell_icon.svg">
-
-    </div>
-    <!-- this is for profile picture -->
-    <div class="profile-picture">
-        <img src="media/profile_picture.svg">
-    </div>
 </nav>
 <!-- this is the main center part of the page and it is divided into two sections, namely section 1 and section 2-->
 <!-- I have separated these sections using the aside tag for each section -->
@@ -70,7 +71,7 @@
     <!-- aside section 1 -->
     <aside class="aside section-1">
         <!-- now the playlist part begins -->
-        <div class="playlist-items" id="song-container">
+        <div class="playlist-items" id="songs-container">
             <!-- playlist item -->
 
         </div>
@@ -89,480 +90,490 @@
     <!-- which will invoke the aside section 2 on lower resolutions -->
     <input type="checkbox" id="more">
     <!-- </div> -->
-    <aside class="aside section-2">
-        <!-- similar class will be applicable to both similar artists and recently played -->
-        <div class="similar">
-            <!-- section heading, which also contains the view all button -->
-            <div class="section-heading">
-                <h1>Similar Artists</h1>
-                <div class="view-all-button">
-                    View All
-                </div>
-            </div>
-            <!-- list is the container for the contents of similar artists -->
-            <div class="list">
-                <!-- item -->
-                <div class="list-item">
-                    <div>
-                        <img src="media/music themes/love.jpg">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div style="position: absolute; left:120px;">
-                        <h5>
-                            Mirage
-                        </h5>
-                        <p class="author-name">
-                            Else
-                        </p>
-                    </div>
-                    <div class="extra">
-                        <div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <p class="author-name">
-                            4:44
-                        </p>
-                    </div>
-                </div>
-                <!-- item -->
-                <div class="list-item">
-                    <div>
-                        <img src="media/music themes/pop.jpg">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div style="position: absolute; left:120px;">
-                        <h5>
-                            Mirage
-                        </h5>
-                        <p class="author-name">
-                            Else
-                        </p>
-                    </div>
-                    <div class="extra">
-                        <div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <p class="author-name">
-                            4:44
-                        </p>
-                    </div>
-                </div>
-                <!-- item -->
-                <div class="list-item">
-                    <div>
-                        <img src="media/music themes/rock.jpg">
-                        <div class="play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
-                    </div>
-                    <div style="position: absolute; left:120px;">
-                        <h5>
-                            Mirage
-                        </h5>
-                        <p class="author-name">
-                            Else
-                        </p>
-                    </div>
-                    <div class="extra">
-                        <div>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
-                        <p class="author-name">
-                            4:44
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- recently played section -->
-            <div class="similar">
-                <!-- section headings, which also contains the view all button -->
-                <div class="section-heading">
-                    <h1>Recently Played</h1>
-                    <div class="view-all-button">
-                        View All
-                    </div>
-                </div>
-                <!-- again list is a container for all the contents of recently played section -->
-                <div class="list">
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                01
-                            </div>
-                            <div>
-                                <img src="media/latest english/I'll Wait.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                02
-                            </div>
-                            <div>
-                                <img src="media/latest english/let me go.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                03
-                            </div>
-                            <div>
-                                <img src="media/latest english/qurantine clean.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                04
-                            </div>
-                            <div>
-                                <img src="media/latest english/roar.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                05
-                            </div>
-                            <div>
-                                <img src="media/latest english/toosie slide.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                06
-                            </div>
-                            <div>
-                                <img src="media/latest english/uptown funk.png">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                07
-                            </div>
-                            <div>
-                                <img src="media/latest hindi/baarish.jpeg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                08
-                            </div>
-                            <div>
-                                <img src="media/latest hindi/galiyaan.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- item -->
-                    <div class="playlist-item">
-                        <div class="left">
-                            <div>
-                                09
-                            </div>
-                            <div>
-                                <img src="media/latest hindi/giveme some sunshine.jpg">
-                                <div class="play-btn">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h5>
-                                    Mirage
-                                </h5>
-                                <p>
-                                    Else
-                                </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div>
-                                <i class="far fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
 </main>
 
-
-<!-- main part of the page is over. -->
-<!-- this is the footer part. -->
-<!-- its position will be fixed to the screen bottom. -->
 <footer>
     <div class="active-song-description">
-        <!-- song image -->
         <div id="song-image">
-            <img src="media/latest english/roar.jpg">
+            <img src="media/latest english/roar.jpg" alt="Current song image">
         </div>
-        <!-- song name and author -->
         <div class="song-desc">
-            <div>
-                Imagine by John
-            </div>
-            <div>
-                John Lenon
-            </div>
-        </div>
-        <!-- heart icon and ban icon -->
-        <div class="heart-and-ban-icon">
-                <span>
-                    <i class="far fa-heart"></i>
-                </span>
-            <span>
-                    <i class="fas fa-ban"></i>
-                </span>
+            <div>Imagine by John</div>
+            <div>John Lennon</div>
         </div>
     </div>
-    <!-- these are the main player controls -->
     <div class="player">
         <div class="controls">
-            <div><i class="fas fa-random"></i></div>
-            <div><i class="fas fa-step-backward"></i></div>
-            <div><i class="fas fa-pause-circle"></i></div>
-            <div><i class="fas fa-step-forward"></i></div>
-            <div><i class="fas fa-redo"></i></div>
+            <div id="random-button"><i class="fas fa-random"></i></div>
+            <div id="prev-button"><i class="fas fa-step-backward"></i></div>
+            <div id="play-pause-button"><i class="fas fa-play-circle"></i></div>
+            <div id="next-button"><i class="fas fa-step-forward"></i></div>
+            <div id="reset-button"><i class="fas fa-redo"></i></div>
         </div>
-        <!-- this is the slider -->
         <div id="slider">
-            <!-- current time -->
             <div class="time">
-                1:39
+                <span id="current-time">0:00</span>
             </div>
-            <div class="slidecontainer">
-                <input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+            <div id="time-slider" class="slidecontainer">
+                <input type="range" min="0" max="100" value="0" class="slider" id="songTime">
             </div>
-            <!-- total time -->
             <div class="time">
-                4:44
+                <span id="total-time">0:00</span>
             </div>
         </div>
     </div>
-    <!-- other icons including the volume slider and all -->
+
+
     <div class="extras">
-        <div>
-            <i class="fas fa-list-ul"></i>
-        </div>
-        <div>
-            <i class="fas fa-laptop"></i>
-        </div>
-        <div>
-            <i class="fas fa-volume-up"></i>
-        </div>
+        <!--        <div><i class="fas fa-list-ul"></i></div>-->
+        <!--        <div><i class="fas fa-laptop"></i></div>-->
+        <div id="volume-icon"><i class="fas fa-volume-up" style="padding-right: 10px" ></i></div>
         <div class="slidecontainer" style="width:30%;">
-            <input type="range" min="0" max="100" value="0" class="slider" id="1myRange" style="margin-top:0px;">
-        </div>
-        <div>
-            <i class="fas fa-expand-alt"></i>
+            <input type="range" min="0" max="100" value="100" class="slider" id="volumeRange" style="margin-top:0; padding-bottom: 4px;">
         </div>
     </div>
 </footer>
+<audio id="audio-player" controls style="display:none;"></audio>
 
-<!--<script>-->
-<!--    axios.get('/favorites')-->
-<!--        .then(response => {-->
-<!--            const songs = response.data;-->
-<!--            console.log(songs)-->
-<!--            const songListDiv = document.getElementById('playlist-items');-->
-<!--            songs.forEach(song => {-->
-<!--                const songItem = `-->
-<!--                        <div class="card" id="playSong">-->
-<!--                <div>-->
-<!--                    <img src="library/image/${song.image}">-->
-<!--                    <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"-->
-<!--                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}">-->
-<!--                        <i class="fas fa-play" style="width:100%; height:100%; display:inline-block"></i>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="song-description">-->
-<!--                    <h3>${song.song_name}</h3>-->
-<!--                    <p>Aug 20, 2020</p>-->
-<!--                </div>-->
-<!--                <div class="options">-->
-<!--                    <label for="latest-release-checkbox"><i class="fas fa-ellipsis-h"></i></label>-->
-<!--                    <input type="checkbox" id="latest-release-checkbox">-->
-<!--                    <div class="latest-release-dropdown">-->
-<!--                        <div class="drop-item">-->
-<!--                            <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play Now</a></p>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                        <div class="drop-item">-->
-<!--                            <p><i class="fas fa-list-ul"></i> Add to Queue</p>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                        <div class="drop-item">-->
-<!--                            <p><i class="fas fa-music"></i> Add to playlist</p>-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                        <div class="drop-item">-->
-<!--                            <p><i class="fas fa-info-circle"></i> Get Info</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <p>4:44</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--                    `;-->
-<!--                songListDiv.innerHTML = songItem;-->
-<!--            });-->
-<!--        })-->
-<!--        .catch(error => {-->
-<!--            console.error('Error fetching songs:', error);-->
-<!--        });-->
-<!--</script>-->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const songsContainer = document.getElementById('songs-container');
+        const audioPlayer = document.getElementById('audio-player');
+        const footerSongImage = document.getElementById('song-image').querySelector('img');
+        const footerSongName = document.querySelector('.song-desc div:nth-child(1)');
+        const footerSongAuthor = document.querySelector('.song-desc div:nth-child(2)');
+        const playPauseButton = document.getElementById('play-pause-button').querySelector('i');
+        const currentTimeElement = document.getElementById('current-time');
+        const totalTimeElement = document.getElementById('total-time');
+        const timeSlider = document.getElementById('songTime');
+        const volumeRange = document.getElementById('volumeRange');
+        const nextButton = document.getElementById('next-button');
+        const prevButton = document.getElementById('prev-button');
+        const resetButton = document.getElementById('reset-button');
+        const volumeIcon = document.getElementById('volume-icon');
+        const randomButton = document.getElementById('random-button');
+
+        let currentSong = null;
+
+
+        // Function to format time in mm:ss
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secondsRemaining = Math.floor(seconds % 60);
+            return `${minutes}:${secondsRemaining < 10 ? '0' : ''}${secondsRemaining}`;
+        }
+
+        function getSongsFavorites() {
+            return axios.get('/favorites');
+        }
+
+        // Function to get song details by ID
+        function getSongDetails(songId) {
+            return axios.get(`/api-public/song/findSongId?songId=${songId}`);
+        }
+
+        // Function to render songs
+        getSongsFavorites()
+            .then(response => {
+                const songs = response.data;
+                console.log(songs)
+                songs.forEach((song, index) => {
+                    const songDiv = document.createElement('div');
+                    songDiv.className = 'playlist-item';
+                    songDiv.innerHTML = `
+                                        <div class="left">
+                                            <div>${String(index + 1).padStart(2, '0')}</div>
+                                            <div>
+                                                <img src="/library/image/${song.image}" alt="${song.song_name}">
+                                                <div class="play-btn" data-song-id="${song.songID}" data-song-src="/library/Music/${song.audio_file}"
+                         data-song-image="/library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.artist.artists_name}">
+                                                    <i class="fas fa-play"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h5>${song.song_name}</h5>
+                                                 <!-- Đổi thành tên của nghệ sĩ từ phản hồi API -->
+                                            </div>
+                                        </div>
+                                        <div class="center">
+                                            4:44
+                                        </div>
+                                        <div class="right">
+                                            <div>
+                                                <button class="remove-favorites" data-user-id="1" data-song-id="${song.songID}">
+                                                    <i class="fas fa-minus-circle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    `;
+                    songsContainer.appendChild(songDiv);
+                });
+
+                const playButtons = document.querySelectorAll('.play-btn');
+                playButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const songId = this.getAttribute('data-song-id');
+                        const songSrc = this.getAttribute('data-song-src');
+                        const songImage = this.getAttribute('data-song-image');
+                        const songName = this.getAttribute('data-song-name');
+                        const songAuthor = this.getAttribute('data-song-author');
+                        playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+
+                        // Call getSongDetails with the selected song ID
+                        getSongDetails(songId)
+                            .then(function (response) {
+                                if (response.status === 200) {
+                                    const songDetails = response.data;
+                                    console.log('Song Details:', songDetails);
+
+                                    // Update footer with song details
+                                    footerSongImage.src = songImage;
+                                    footerSongName.textContent = songName;
+                                    footerSongAuthor.textContent = songAuthor;
+
+                                    // Update the audio source and play the song
+                                    audioPlayer.src = songSrc;
+                                    audioPlayer.play();
+                                    let isThirtySecondsReached = false;
+                                    audioPlayer.addEventListener('timeupdate', function() {
+                                        console.log("Thời gian hiện tại:", audioPlayer.currentTime);
+                                        if (!isThirtySecondsReached && audioPlayer.currentTime >= 29) {
+                                            isThirtySecondsReached = true;
+                                            updateListenCount(songId);
+                                        }
+                                    });
+
+                                    // Set the volume to maximum
+                                    audioPlayer.volume = 1;
+                                    volumeRange.value = 100;
+
+                                    // Update the play/pause button
+                                    playPauseButton.classList.remove('fa-play-circle');
+                                    playPauseButton.classList.add('fa-pause-circle');
+
+                                    // Set the current song
+                                    currentSong = {
+                                        songId,
+                                        songSrc,
+                                        songImage,
+                                        songName,
+                                        songAuthor
+                                    };
+                                } else {
+                                    alert('Failed to get song details');
+                                }
+                            })
+                            .catch(function (error) {
+                                console.error('Error fetching song details:', error);
+                            });
+                    });
+                });
+
+                const removeButtons = document.querySelectorAll('.remove-favorites');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const userId = this.getAttribute('data-user-id');
+                        const songId = this.getAttribute('data-song-id');
+
+                        Swal.fire({
+                            title: "Bạn chắc chắn?",
+                            text: "Xóa bài hát ra khỏi mục yêu thích!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                axios.delete('/delete-favorites', {
+                                    params: { userId, songId }
+                                })
+                                    .then(response => {
+                                        Swal.fire({
+                                            title: "Đã Xóa!",
+                                            text: "Bạn đã xóa bài hát khỏi mục yêu thích.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            // Remove the song from the DOM
+                                            button.closest('.playlist-item').remove();
+                                            // Reload the page
+                                            location.reload();
+                                        });
+                                    })
+                                    .catch(error => {
+                                        let errorMessage = "Lỗi hệ thống. Vui lòng thử lại sau.";
+                                        if (error.response && error.response.data) {
+                                            errorMessage = error.response.data;
+                                        }
+                                        Swal.fire({
+                                            title: "Error!",
+                                            text: errorMessage,
+                                            icon: "error"
+                                        });
+                                    });
+                            }
+                        });
+                    });
+                });
+
+
+
+            })
+
+            .catch(error => {
+                console.error('Error fetching songs:', error);
+            });
+
+
+
+
+        // Play/pause button functionality
+        playPauseButton.addEventListener('click', function () {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseButton.classList.remove('fa-play-circle');
+                playPauseButton.classList.add('fa-pause-circle');
+            } else {
+                audioPlayer.pause();
+                playPauseButton.classList.remove('fa-pause-circle');
+                playPauseButton.classList.add('fa-play-circle');
+            }
+        });
+
+        // Update the play/pause button when the song ends
+        audioPlayer.addEventListener('ended', function () {
+            playPauseButton.classList.remove('fa-pause-circle');
+            playPauseButton.classList.add('fa-play-circle');
+        });
+
+        // Update current time and total time
+        audioPlayer.addEventListener('timeupdate', function () {
+            currentTimeElement.textContent = formatTime(audioPlayer.currentTime);
+            timeSlider.value = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        });
+
+        // Set total time when metadata is loaded
+        audioPlayer.addEventListener('loadedmetadata', function () {
+            totalTimeElement.textContent = formatTime(audioPlayer.duration);
+        });
+
+        // Seek functionality
+        timeSlider.addEventListener('input', function () {
+            const seekTime = (timeSlider.value / 100) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
+
+        // Volume control functionality
+        volumeRange.addEventListener('input', function () {
+            audioPlayer.volume = volumeRange.value / 100;
+        });
+
+        // Set initial volume to max
+        audioPlayer.volume = 1;
+        volumeRange.value = 100;
+
+
+        // xử lí nút next
+        nextButton.addEventListener('click', function () {
+            if (isRandomActive) { // Kiểm tra xem nút Random có được kích hoạt không
+                const playButtons = document.querySelectorAll('.play-btn');
+                const randomIndex = Math.floor(Math.random() * playButtons.length); // Chọn một số ngẫu nhiên từ 0 đến độ dài danh sách bài hát
+                const randomButton = playButtons[randomIndex]; // Lấy phần tử ở vị trí ngẫu nhiên trong danh sách bài hát
+                loadAndPlaySong(randomButton); // Tải và phát bài hát từ phần tử đã chọn ngẫu nhiên
+            } else { // Nếu nút Random không được kích hoạt, thực hiện chức năng Next bình thường
+                const currentButton = document.querySelector('.current-song');
+                const playButtons = document.querySelectorAll('.play-btn' +
+                    '');
+                const currentIndex = Array.from(playButtons).indexOf(currentButton);
+                let nextIndex;
+
+                if (currentIndex === playButtons.length - 1) {
+                    nextIndex = 0; // Quay lại bài hát đầu nếu đang ở cuối danh sách
+                } else {
+                    nextIndex = currentIndex + 1;
+                }
+
+                const nextButton = playButtons[nextIndex];
+                loadAndPlaySong(nextButton);
+            }
+        });
+
+
+        // xử lí nút prev
+        prevButton.addEventListener('click', function () {
+            if (isRandomActive) { // Kiểm tra xem nút Random có được kích hoạt không
+                const playButtons = document.querySelectorAll('.play-btn');
+                const randomIndex = Math.floor(Math.random() * playButtons.length); // Chọn một số ngẫu nhiên từ 0 đến độ dài danh sách bài hát
+                const randomButton = playButtons[randomIndex]; // Lấy phần tử ở vị trí ngẫu nhiên trong danh sách bài hát
+                loadAndPlaySong(randomButton); // Tải và phát bài hát từ phần tử đã chọn ngẫu nhiên
+            } else { // Nếu nút Random không được kích hoạt, thực hiện chức năng Prev bình thường
+                const currentButton = document.querySelector('.current-song');
+                const playButtons = document.querySelectorAll('.play-btn');
+                const currentIndex = Array.from(playButtons).indexOf(currentButton);
+                let prevIndex;
+
+                if (currentIndex === 0) {
+                    prevIndex = playButtons.length - 1; // Quay lại bài hát cuối nếu đang ở đầu danh sách
+                } else {
+                    prevIndex = currentIndex - 1;
+                }
+
+                const prevButton = playButtons[prevIndex];
+                loadAndPlaySong(prevButton);
+            }
+        });
+
+
+        // xử lí nút reset
+        resetButton.addEventListener('click', function () {
+            audioPlayer.currentTime = 0;
+        });
+
+
+        // Hàm load và phát bài hát
+        function loadAndPlaySong(button) {
+            const songId = button.getAttribute('data-song-id');
+            const songSrc = button.getAttribute('data-song-src');
+            const songImage = button.getAttribute('data-song-image');
+            const songName = button.getAttribute('data-song-name');
+            const songAuthor = button.getAttribute('data-song-author');
+
+            // Cập nhật footer với chi tiết bài hát
+            footerSongImage.src = songImage;
+            footerSongName.textContent = songName;
+            footerSongAuthor.textContent = songAuthor;
+
+            // Cập nhật nguồn audio và phát bài hát
+            audioPlayer.src = songSrc;
+            audioPlayer.play();
+
+            // Đặt âm lượng về tối đa
+            audioPlayer.volume = 1;
+            volumeRange.value = 100;
+
+            // Cập nhật nút play/pause
+            playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+            playPauseButton.classList.remove('fa-play-circle');
+            playPauseButton.classList.add('fa-pause-circle');
+
+            // Loại bỏ lớp 'current-song' từ nút hiện tại
+            const currentButton = document.querySelector('.current-song');
+            if (currentButton) {
+                currentButton.classList.remove('current-song');
+            }
+
+            // Thêm lớp 'current-song' vào nút mới
+            button.classList.add('current-song');
+        }
+
+        // Xử lý sự kiện cho nút Random
+        let isRandomActive = false;
+
+        randomButton.addEventListener('click', function () {
+            isRandomActive = !isRandomActive; // Đảo ngược trạng thái của nút Random
+            if (isRandomActive) {
+                randomButton.style.color = 'green'; // Đổi màu nút Random thành xanh
+            } else {
+                randomButton.style.color = ''; // Đặt màu trở lại mặc định
+            }
+        });
+
+
+        // xử lí cho nút tắt giảm âm lượng
+        volumeIcon.addEventListener('click', function () {
+            if (audioPlayer.volume > 0) {
+                audioPlayer.volume = 0;
+                volumeRange.value = 0;
+            } else {
+                audioPlayer.volume = 1;
+                volumeRange.value = 100;
+            }
+        });
+
+    });
+
+
+    // Get audio element
+    var audio = document.getElementById("audio-player");
+
+    // Get play/pause button
+    var playPauseButton = document.getElementById("play-pause-button");
+
+    // Play/pause function
+    function togglePlayPause() {
+        if (audio.paused) {
+            audio.play();
+            playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
+        } else {
+            audio.pause();
+            playPauseButton.innerHTML = '<i class="fas fa-play-circle"></i>';
+        }
+    }
+
+    // Add click event listener to play/pause button
+    playPauseButton.addEventListener("click", togglePlayPause);
+
+    // Update current time and total time
+    audio.addEventListener("timeupdate", function () {
+        var currentTime = document.getElementById("current-time");
+        var totalTime = document.getElementById("total-time");
+        currentTime.innerHTML = formatTime(audio.currentTime);
+        totalTime.innerHTML = formatTime(audio.duration);
+    });
+
+    // Function to format time (mm:ss)
+    function formatTime(time) {
+        var minutes = Math.floor(time / 60);
+        var seconds = Math.floor(time % 60);
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
+
+    // Volume control
+    var volumeRange = document.getElementById("volumeRange");
+    volumeRange.addEventListener("change", function () {
+        audio.volume = volumeRange.value / 100;
+    });
+    // Lấy phần tử thanh trượt thời gian
+    var timeSlider = document.getElementById("songTime");
+
+    // Khi bài hát được phát, cập nhật giá trị của thanh trượt thời gian
+    audio.addEventListener("timeupdate", function () {
+        var currentTime = audio.currentTime;
+        var duration = audio.duration;
+        var percentage = (currentTime / duration) * 100;
+        timeSlider.value = percentage;
+    });
+
+    // Khi người dùng di chuyển thanh trượt, điều chỉnh thời gian của bài hát
+    timeSlider.addEventListener("input", function () {
+        var percentage = timeSlider.value;
+        var duration = audio.duration;
+        var currentTime = (percentage * duration) / 100;
+        audio.currentTime = currentTime;
+    });
+    // Lấy phần tử thanh trượt thời gian
+    var timeSlider = document.getElementById("songTime");
+
+    // Khi bài hát được phát, cập nhật giá trị của thanh trượt thời gian và tạo biến --range-value
+    audio.addEventListener("timeupdate", function () {
+        var currentTime = audio.currentTime;
+        var duration = audio.duration;
+        var percentage = (currentTime / duration) * 100;
+        timeSlider.value = percentage;
+        timeSlider.style.setProperty('--range-value', percentage + '%');
+    });
+
+
+
+
+
+
+
+</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

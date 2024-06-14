@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.example.music_mp3.Data.Variable.StaticVariable.sessionEmail;
 
 @Service
@@ -28,12 +31,6 @@ public class FavoritesServiceImpl implements FavoritesService {
 
     @Autowired
     private SongRepo songRepo;
-
-
-    @Override
-    public List<FavoritesM> findFavoritesByUserEmail(String email) throws SQLException {
-        return FavoritesM.converListFavoritesEToListFavoritesM(favoritesRepo.findFavoritesByUserEmail(email));
-    }
 
     @Override
     public byte createFavorites(FavoitesDto favoitesDto) throws SQLException {
@@ -59,14 +56,17 @@ public class FavoritesServiceImpl implements FavoritesService {
         return -1;
     }
 
-//    @Override
-//    public List<FavoritesEntity> getAllFavoritesByUserId(FavoitesDto favoitesDto) throws SQLException {
-////        var user = accountRepository.findByEmail(favoitesDto.getAccountsEntity().);
-////        if (user == null) {
-////            throw new SQLException("User not found");
-////        }
-////        return favoritesRepo.findAllByUserId(user.getUserId());
-//    }
+    @Override
+    public byte deleteFavorite(int userId, int songId) throws SQLException {
+        try {
+            favoritesRepo.deleteFavoriteByUserIdAndSongId(userId, songId);
+            return 1;
+        } catch (Exception e) {
+            // Handle any errors
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
 
 }

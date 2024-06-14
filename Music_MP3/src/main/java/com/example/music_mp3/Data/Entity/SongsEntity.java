@@ -46,4 +46,8 @@ public class SongsEntity implements Serializable {
 
     @OneToMany(mappedBy = "song")
     private List<MonthlyTrendingEntity> monthlyTrending;
+
+    @OneToMany(mappedBy = "song",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<FavoritesEntity> favoritesEntities;
 }

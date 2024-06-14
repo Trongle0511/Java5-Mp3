@@ -5,6 +5,9 @@ import com.example.music_mp3.Data.Entity.ArtistsEntity;
 import com.example.music_mp3.Data.Entity.SongsEntity;
 import lombok.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,5 +26,11 @@ public class SongM {
                 .Image(songE.getImage())
                 .audio_file(songE.getAudio_file())
                 .build();
+    }
+
+    public static List<SongM> convertListSongsEntityToListSongM(List<SongsEntity> listSongsEntities) {
+        return  listSongsEntities.stream()
+                .map(e -> convertSongsEntityToSongM(e))
+                .collect(Collectors.toList());
     }
 }
