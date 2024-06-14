@@ -66,6 +66,16 @@ public class AccountAPI {
     public ResponseEntity<?> sendEmailForUser(@RequestBody AccountDTO accountDTO) {
         Map<String, Object> result = new HashMap<>();
         try {
+            // Kiểm tra các trường bắt buộc
+            if (accountDTO.getEmail() == null || accountDTO.getEmail().isEmpty() ||
+                    accountDTO.getUsername() == null || accountDTO.getUsername().isEmpty() ||
+                    accountDTO.getHashedPassword() == null || accountDTO.getHashedPassword().isEmpty()) {
+                result.put("success", false);
+                result.put("message", "Vui lòng nhập đầy đủ thông tin");
+                result.put("data", null);
+                return ResponseEntity.ok(result);
+            }
+
             boolean checkExistEmail = registerService.existsByEmail(accountDTO.getEmail());
             boolean checkExistUsername = registerService.existsByUsername( accountDTO.getUsername());
             if (!checkExistEmail) {

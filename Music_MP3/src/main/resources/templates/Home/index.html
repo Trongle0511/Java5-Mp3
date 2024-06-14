@@ -444,14 +444,25 @@
             songs.forEach(song => {
                 const dropdownId = `latest-release-checkbox-${song.songID}`; // ID duy nhất cho mỗi dropdown
                 const songCard = `
-                    <div class="card" id="playSong" data-song-name="${song.song_name}">
-                        <div>
-                            <img src="library/image/${song.image}">
-                            <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
-                                 data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}"
-                                 style="display: flex; justify-content: center; align-items: center; width: 100px; height: 100px;">
-                                <i class="fas fa-play" style="width:50%; height:50%;"></i>
-                            </div>
+            <div class="card" id="playSong" data-song-name="${song.song_name}">
+                <div>
+                    <img src="library/image/${song.image}">
+                    <div class="play-button" data-song-id="${song.songID}" data-song-src="library/Music/${song.audio_file}"
+                         data-song-image="library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.artist.artists_name}"
+                         style="display: flex; justify-content: center; align-items: center; width: 100px; height: 100px;">
+                        <i class="fas fa-play" style="width:50%; height:50%;"></i>
+                    </div>
+                </div>
+                <div class="song-description">
+                    <h3>${song.song_name}</h3>
+                    <p>Aug 20, 2020</p>
+                </div>
+                <div class="options">
+                    <label for="latest-release-checkbox"><i class="fas fa-ellipsis-h"></i></label>
+                    <input type="checkbox" id="latest-release-checkbox">
+                    <div class="latest-release-dropdown">
+                        <div class="drop-item">
+                            <p><i class="fas fa-play-circle"></i> <a href="SinglePlaylistScreen.html">Play Now</a></p>
                         </div>
                         <div class="song-description">
                             <h3>${song.song_name}</h3>
@@ -497,6 +508,7 @@
                     const songAuthor = this.getAttribute('data-song-author');
                     playPauseButton.innerHTML = '<i class="fas fa-pause-circle"></i>';
 
+                    console.log(songAuthor)
                     // Call getSongDetails with the selected song ID
                     getSongDetails(songId)
                         .then(function (response) {

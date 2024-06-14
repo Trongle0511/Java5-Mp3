@@ -1,8 +1,39 @@
+
 $(document).ready(async function () {
+
+
     const sendEmailForUser = async () => {
-        let username = $('#username').val();
-        let email = $('#email').val();
-        let password = $('#password').val();
+
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+
+        if (!username || !email || !password) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Vui lòng nhập đầy đủ thông tin"
+            });
+            return;
+        }
+
+        let timerInterval;
+        Swal.fire({
+            title: "Thông báo",
+            html: "Vui lòng đợi trong <b></b>s",
+            timer: 3500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        })
 
         await axios
             .post("/api/accounts/send-email-for-user", {
@@ -55,7 +86,7 @@ $(document).ready(async function () {
             })
     }
     $('#registerBtn').click(() => {
-        sendEmailForUser()
+            sendEmailForUser()
     })
 
     const confirmOtp = async () => {

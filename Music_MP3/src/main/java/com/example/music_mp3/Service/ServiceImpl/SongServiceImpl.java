@@ -88,7 +88,8 @@ public class SongServiceImpl implements SongService {
                 song.getId(),
                 song.getSong_name(),
                 song.getImage(),
-                song.getAudio_file()
+                song.getAudio_file(),
+                song.getArtist()
         );
     }
 
