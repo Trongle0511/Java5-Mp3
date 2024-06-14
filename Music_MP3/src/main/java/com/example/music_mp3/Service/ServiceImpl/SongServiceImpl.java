@@ -16,6 +16,7 @@ import com.example.music_mp3.Service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,11 @@ public class SongServiceImpl implements SongService {
         return songsEntities.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SongM> findSongsEntityByUserEmailByUserEmail(String email) throws SQLException {
+        return SongM.convertListSongsEntityToListSongM(songRepo.findSongsEntityByUserEmailByUserEmail(email));
     }
 
 }

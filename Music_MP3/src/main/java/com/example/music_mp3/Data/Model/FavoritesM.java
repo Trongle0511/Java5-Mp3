@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FavoritesM extends FavoritesEntity {
+public class FavoritesM {
     private Integer FavoriteId;
-    private SongsEntity songsEntity;
-    private AccountsEntity accountsEntity;
+    private SongsEntity song;
+    private AccountsEntity user;
     private Date createdAt;
 
     public static FavoritesM convertUserEToUserM(FavoritesEntity favorites) {
         return FavoritesM.builder()
                 .FavoriteId(favorites.getFavoriteId())
-                .songsEntity(favorites.getSong())
-                .accountsEntity(favorites.getUser())
+                .song(favorites.getSong())
+                .user(favorites.getUser())
                 .createdAt(favorites.getCreatedAt())
                 .build();
     }

@@ -312,6 +312,8 @@ public class HomeController {
 
     @GetMapping("/detail")
     public String detail() {
+        return "Home/SinglePlaylistScreen";
+    }
 
     @GetMapping("/detail/{artistId}")
     public String detail(@PathVariable int artistId) {
@@ -319,9 +321,8 @@ public class HomeController {
         return "Home/SinglePlaylistScreen";
     }
 
-    @GetMapping("/Song-favorites")
+    @GetMapping("/song-favorites")
     public String songFavorites() {
-
         return "Home/Favorites";
     }
 }

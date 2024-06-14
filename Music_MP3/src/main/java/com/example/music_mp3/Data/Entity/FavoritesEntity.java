@@ -18,15 +18,14 @@ import java.util.List;
 public class FavoritesEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favorite_Id")
-//    @Column(name = "favorite_id")
+    @Column(name = "favorite_id")
     private Integer favoriteId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private AccountsEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "song_id", nullable = false)
     private SongsEntity song;
 
