@@ -240,7 +240,7 @@
                                             <div>
                                                 <img src="/library/image/${song.image}" alt="${song.song_name}">
                                                 <div class="play-btn" data-song-id="${song.songID}" data-song-src="/library/Music/${song.audio_file}"
-                         data-song-image="/library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.author}">
+                         data-song-image="/library/image/${song.image}" data-song-name="${song.song_name}" data-song-author="${song.artist.artists_name}">
                                                     <i class="fas fa-play"></i>
                                                 </div>
                                             </div>
@@ -249,17 +249,17 @@
                                                  <!-- Đổi thành tên của nghệ sĩ từ phản hồi API -->
                                             </div>
                                         </div>
-                                        <div class="center">
-                                            4:44
-                                        </div>
-                                        <div class="right">
-                                            <div>
-                                                <i class="far fa-heart"></i>
-                                            </div>
-                                            <div>
-                                                <i class="fas fa-plus"></i>
-                                            </div>
-                                        </div>
+<!--                                        <div class="center">-->
+<!--                                            4:44-->
+<!--                                        </div>-->
+<!--                                        <div class="right">-->
+<!--                                            <div>-->
+<!--                                                <i class="far fa-heart"></i>-->
+<!--                                            </div>-->
+<!--                                            <div>-->
+<!--                                                <i class="fas fa-plus"></i>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                     `;
                                     songsContainer.appendChild(songDiv);
                                 });

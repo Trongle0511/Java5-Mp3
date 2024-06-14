@@ -15,6 +15,7 @@ public class SongM {
     private String song_name;
     private String Image;
     private String audio_file;
+    private ArtistsEntity artist;
 
     public static SongM convertSongsEntityToSongM(SongsEntity songE){
         return SongM.builder()
@@ -22,6 +23,7 @@ public class SongM {
                 .song_name(songE.getSong_name())
                 .Image(songE.getImage())
                 .audio_file(songE.getAudio_file())
+                .artist(songE.getArtist())
                 .build();
     }
 }
