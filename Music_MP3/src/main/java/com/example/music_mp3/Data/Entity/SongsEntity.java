@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.List;
 
 @Data
@@ -17,7 +18,8 @@ import java.util.List;
 public class SongsEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SongID;
+    @Column(name = "song_id")
+    private int id;
 
     @Column(name = "song_name")
     private String song_name;
@@ -44,4 +46,8 @@ public class SongsEntity implements Serializable {
 
     @OneToMany(mappedBy = "song")
     private List<MonthlyTrendingEntity> monthlyTrending;
+
+    @OneToMany(mappedBy = "song",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<FavoritesEntity> favoritesEntities;
 }

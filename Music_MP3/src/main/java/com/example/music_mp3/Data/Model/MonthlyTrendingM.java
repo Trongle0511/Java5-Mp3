@@ -25,7 +25,7 @@ public class MonthlyTrendingM {
         int monthlyViews = songsEntity.getMonthlyTrending().isEmpty() ? 0 : songsEntity.getMonthlyTrending().get(0).getMonthly_Views();
         String artistsName = songsEntity.getArtist() != null ? songsEntity.getArtist().getArtists_name() : "No name :)))";
         return  MonthlyTrendingM.builder()
-                .songId(songsEntity.getSongID())
+                .songId(songsEntity.getId())
                 .song_name(songsEntity.getSong_name())
                 .image(songsEntity.getImage())
                 .audio_file(songsEntity.getAudio_file())

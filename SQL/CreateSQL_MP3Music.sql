@@ -52,7 +52,7 @@ CREATE TABLE Genres (
 
 -- Bảng Bài hát (Songs)
 CREATE TABLE Songs (
-    songid INT IDENTITY(1,1) PRIMARY KEY,
+    song_id INT IDENTITY(1,1) PRIMARY KEY,
     song_name NVARCHAR(100) NOT NULL,
     Image NVARCHAR(255) NOT NULL,
     audio_file NVARCHAR(255) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE SongRatings (
     songid INT,
     Views INT NOT NULL,
     user_id INT,
-    FOREIGN KEY (songid) REFERENCES Songs(songid),
+    FOREIGN KEY (songid) REFERENCES Songs(song_id),
     FOREIGN KEY (user_id) REFERENCES Account(user_id),
     PRIMARY KEY (songid, user_id)
 );
@@ -88,7 +88,7 @@ CREATE TABLE PlaylistSongs (
     playlistid INT,
     songid INT,
     FOREIGN KEY (playlistid) REFERENCES Playlist(playlistid),
-    FOREIGN KEY (songid) REFERENCES Songs(songid),
+    FOREIGN KEY (songid) REFERENCES Songs(song_id),
     PRIMARY KEY (playlistid, songid)
 );
 
@@ -97,8 +97,19 @@ CREATE TABLE MonthlyTrending (
     monthly_trendingid INT IDENTITY(1,1) PRIMARY KEY,
     songid INT NOT NULL,
     monthly_views INT NOT NULL,
-    FOREIGN KEY (songid) REFERENCES Songs(songid)
+    FOREIGN KEY (songid) REFERENCES Songs(song_id)
 );
+
+CREATE TABLE Favorites (
+favorite_id INT IDENTITY(1,1) PRIMARY KEY,
+user_id INT NOT NULL,
+song_id INT NOT NULL,
+created_at DATETIME DEFAULT GETDATE(),
+FOREIGN KEY (user_id) REFERENCES Account(user_id),
+FOREIGN KEY (song_id) REFERENCES Songs(song_id),
+UNIQUE (user_id, song_id) -- Mỗi người dùng chỉ có thể yêu thích mỗi bài hát một lần
+);
+
 INSERT INTO MonthlyTrending (songid, monthly_views) VALUES 
 (1, 1000),
 (2, 2000);
@@ -125,4 +136,15 @@ BEGIN
     LEFT JOIN Account a ON i.user_id = a.user_id
     LEFT JOIN Users u ON a.user_id = u.account_id;
 END;
-
+-- Tạo trigger để thêm bản ghi vào bảng MonthlyTrending khi có bài hát mới được thêm vào bảng Songs
+CREATE TRIGGER trg_AfterInsert_Songs
+ON Songs
+AFTER INSERT
+AS
+BEGIN
+    -- Thêm bản ghi vào bảng MonthlyTrending với songid từ bảng Songs mới được thêm vào và set monthly_views = 0
+    INSERT INTO MonthlyTrending (songid, monthly_views)
+    SELECT song_id, 0
+    FROM inserted;
+END;
+GO

@@ -7,6 +7,7 @@ import com.example.music_mp3.Data.Entity.SongsEntity;
 import com.example.music_mp3.Data.Model.SongInsertM;
 import com.example.music_mp3.Data.Model.SongM;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface SongService{
@@ -16,4 +17,6 @@ public interface SongService{
     List<SongInsertM> findAllSongInsertM();
 
     List<SongDTO> findSongsByArtistId(int artistId);
+
+    List<SongM> findSongsEntityByUserEmailByUserEmail(String email) throws SQLException;
 }

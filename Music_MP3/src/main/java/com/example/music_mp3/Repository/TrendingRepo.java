@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrendingRepo extends JpaRepository<MonthlyTrendingEntity,Integer> {
-    @Query("SELECT mt FROM MonthlyTrendingEntity mt WHERE mt.song.SongID = :songId")
+    @Query("SELECT mt FROM MonthlyTrendingEntity mt WHERE mt.song.id = :songId")
     MonthlyTrendingEntity findBySongId(@Param("songId") int songId);
 }
