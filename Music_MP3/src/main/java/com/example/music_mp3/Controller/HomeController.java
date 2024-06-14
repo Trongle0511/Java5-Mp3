@@ -123,6 +123,7 @@ public class HomeController {
             System.out.println(email);
             if (authService.isAdmin(email)) {
                 // Đăng nhập thành công cho vai trò admin
+                session.removeAttribute("email");
                 return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/admin")).build();
             } else {
                 // Đăng nhập thành công cho vai trò user

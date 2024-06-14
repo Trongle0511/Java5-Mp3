@@ -66,7 +66,8 @@ public class SongApi {
     public ResponseEntity<?> addSongAndArtist(@RequestParam("song_name") String songName,
                                               @RequestParam("image") MultipartFile image,
                                               @RequestParam("audio_file") MultipartFile audioFile,
-                                              @RequestParam("artist_name") String artistName) {
+                                              @RequestParam("artist_name") String artistName,
+                                              @RequestParam("genre") Integer genreid) {
 
         String imagePath = null;
         if (image != null && !image.isEmpty()) {
@@ -97,6 +98,7 @@ public class SongApi {
         songAndArtistInsertDto.setArtist_name(artistName);
         songAndArtistInsertDto.setImage(imagePath);
         songAndArtistInsertDto.setAudio_file(audioPath);
+        songAndArtistInsertDto.setGenreid(genreid);
 
         Map<String, Object> result = new HashMap<>();
         try {
@@ -129,7 +131,5 @@ public class SongApi {
             result.put("data", null);
             return ResponseEntity.status(500).body(result);
         }
-
     }
-
 }
